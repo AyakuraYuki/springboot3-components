@@ -19,8 +19,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>21</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <generateBackupPoms>false</generateBackupPoms>
 
     <argLine>
@@ -101,24 +101,6 @@
   </dependencyManagement>
 
   <build>
-    <resources>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.*</include>
-        </includes>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*.*</include>
-        </includes>
-      </resource>
-    </resources>
-
     <pluginManagement>
       <plugins>
         <plugin>
@@ -135,6 +117,8 @@
                 <artifactId>lombok</artifactId>
               </path>
             </annotationProcessorPaths>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
           </configuration>
         </plugin>
 

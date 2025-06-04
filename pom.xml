@@ -13,6 +13,7 @@
   <modules>
     <module>boot</module>
     <module>errors</module>
+    <module>utility</module>
   </modules>
 
   <properties>
@@ -46,6 +47,8 @@
     <protobuf.version>4.30.0</protobuf.version>
     <gson.version>2.13.1</gson.version>
     <guava.version>33.4.8-jre</guava.version>
+    <bouncycastle.version>1.80</bouncycastle.version>
+    <lombok.version>1.18.38</lombok.version>
   </properties>
 
   <dependencyManagement>
@@ -78,6 +81,11 @@
         <artifactId>springboot3-components-errors</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>cc.ayakurayuki</groupId>
+        <artifactId>springboot3-components-utility</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <!-- json -->
       <dependency>
@@ -92,9 +100,22 @@
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
         <optional>true</optional>
       </dependency>
     </dependencies>

@@ -9,14 +9,8 @@
   </parent>
 
   <artifactId>springboot3-components-errors</artifactId>
+  <packaging>jar</packaging>
   <name>Spring Boot 3 Components - errors</name>
   <description>Server exception handling component with unified error encapsulation and predefined status codes</description>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
-  </dependencies>
 
 </project>

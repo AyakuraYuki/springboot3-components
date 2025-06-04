@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>springboot3-components-boot</artifactId>
+  <packaging>jar</packaging>
   <name>Spring Boot 3 Components - boot</name>
   <description>This module provides a lightweight SPI-based mechanism for class preloading during application startup through configurable package scanning and exclusion.</description>
 

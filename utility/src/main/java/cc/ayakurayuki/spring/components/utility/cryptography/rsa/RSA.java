@@ -28,10 +28,11 @@ public final class RSA {
 
   // RSA 算法
   private static final String ALGORITHM = "RSA";
-  private static final int    KEY_SIZE  = 2048;
 
   // 签名算法
-  private static final String SIGN_ALGORITHM = "SHA1withRSA";
+  private static final String SHA1withRSA   = "SHA1withRSA";
+  private static final String SHA256withRSA = "SHA256withRSA";
+  private static final String SHA512withRSA = "SHA512withRSA";
 
   // Base64
   private static final Encoder ENCODER     = Base64.getEncoder();
@@ -61,18 +62,17 @@ public final class RSA {
 
   // region Sign / Verify
 
-  public static String sign(String data, RSAPrivateKey privateKey) throws GeneralSecurityException {
-    Signature signature = Signature.getInstance(SIGN_ALGORITHM);
+  public static String sign(byte[] data, RSAPrivateKey privateKey, String signAlgorith) throws GeneralSecurityException {
+    Signature signature = Signature.getInstance(signAlgorith);
     signature.initSign(privateKey);
-    signature.update(data.getBytes(StandardCharsets.UTF_8));
+    signature.update(data);
     return ENCODER.encodeToString(signature.sign());
   }
 
-  public static boolean verify(String data, String signString, RSAPublicKey publicKey) throws GeneralSecurityException {
-    byte[] sign = DECODER.decode(signString);
-    Signature signature = Signature.getInstance(SIGN_ALGORITHM);
+  public static boolean verify(byte[] data, RSAPublicKey publicKey, String signAlgorith, byte[] sign) throws GeneralSecurityException {
+    Signature signature = Signature.getInstance(signAlgorith);
     signature.initVerify(publicKey);
-    signature.update(data.getBytes(StandardCharsets.UTF_8));
+    signature.update(data);
     return signature.verify(sign);
   }
 
@@ -81,7 +81,7 @@ public final class RSA {
   // region Generating
 
   public static RSAKeyPair generateKey() throws NoSuchAlgorithmException {
-    return generateKey(KEY_SIZE);
+    return generateKey(2048);
   }
 
   public static RSAKeyPair generateKey(int keySize) throws NoSuchAlgorithmException {
@@ -89,7 +89,7 @@ public final class RSA {
       throw new IllegalArgumentException("illegal key size: %d".formatted(keySize));
     }
     KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
-    keyPairGenerator.initialize(KEY_SIZE);
+    keyPairGenerator.initialize(keySize);
     KeyPair keyPair = keyPairGenerator.generateKeyPair();
     return new RSAKeyPair((RSAPrivateKey) keyPair.getPrivate(), (RSAPublicKey) keyPair.getPublic());
   }
@@ -122,8 +122,11 @@ public final class RSA {
    */
   public static RSAPrivateKey toPrivateKey(String content) throws GeneralSecurityException, IOException {
     Objects.requireNonNull(content);
+
     PemReader reader = new PemReader(new StringReader(content));
     PemObject pemObject = reader.readPemObject();
+    Objects.requireNonNull(pemObject);
+
     PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(pemObject.getContent());
     KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
     return (RSAPrivateKey) keyFactory.generatePrivate(spec);
@@ -134,8 +137,11 @@ public final class RSA {
    */
   public static RSAPublicKey toPublicKey(String content) throws GeneralSecurityException, IOException {
     Objects.requireNonNull(content);
+
     PemReader reader = new PemReader(new StringReader(content));
     PemObject pemObject = reader.readPemObject();
+    Objects.requireNonNull(pemObject);
+
     X509EncodedKeySpec spec = new X509EncodedKeySpec(pemObject.getContent());
     KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
     return (RSAPublicKey) keyFactory.generatePublic(spec);

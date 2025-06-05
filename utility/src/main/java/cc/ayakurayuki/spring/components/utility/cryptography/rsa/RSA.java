@@ -33,73 +33,38 @@ import org.bouncycastle.util.io.pem.PemReader;
 
 public final class RSA {
 
-  public static final String ALGORITHM = "RSA";
-
-  public static final String RSA_ECB_PKCS1Padding = "RSA/ECB/PKCS1Padding";
-
   static {
-    Security.addProvider(new BouncyCastleProvider());
+    Security.addProvider(new BouncyCastleProvider()); // register BouncyCastle provider
   }
 
   // region encrypt
 
-  /**
-   * encrypt data with given algorithm and standard provider
-   *
-   * @param src       data to encrypt
-   * @param publicKey rsa public key
-   * @param algorithm rsa algorithm
-   *
-   * @return encrypted data
-   */
   public static byte[] encrypt(byte[] src, RSAPublicKey publicKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm);
-    cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-    return cipher.doFinal(src);
+    return encrypt(cipher, src, publicKey);
   }
 
-  /**
-   * encrypt data with given algorithm and {@link BouncyCastleProvider}
-   *
-   * @param src       data to encrypt
-   * @param publicKey rsa public key
-   * @param algorithm rsa algorithm
-   *
-   * @return encrypted data
-   */
-  public static byte[] encryptBC(byte[] src, RSAPublicKey publicKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
+  public static byte[] encryptWithBC(byte[] src, RSAPublicKey publicKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm, BouncyCastleProvider.PROVIDER_NAME);
+    return encrypt(cipher, src, publicKey);
+  }
+
+  private static byte[] encrypt(Cipher cipher, byte[] src, RSAPublicKey publicKey) throws GeneralSecurityException {
+    Objects.requireNonNull(publicKey);
     cipher.init(Cipher.ENCRYPT_MODE, publicKey);
     return cipher.doFinal(src);
   }
 
-  /**
-   * encrypt large data in chunks with given algorithm and standard provider
-   *
-   * @param src       data to encrypt
-   * @param publicKey rsa public key
-   * @param algorithm rsa algorithm
-   *
-   * @return encrypted data
-   */
+
   public static byte[] encryptChunks(byte[] src, RSAPublicKey publicKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm);
     return encryptChunks(cipher, src, publicKey);
   }
 
-  /**
-   * encrypt large data in chunks with given algorithm and {@link BouncyCastleProvider}
-   *
-   * @param src       data to encrypt
-   * @param publicKey rsa public key
-   * @param algorithm rsa algorithm
-   *
-   * @return encrypted data
-   */
-  public static byte[] encryptChunksBC(byte[] src, RSAPublicKey publicKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
+  public static byte[] encryptChunksWithBC(byte[] src, RSAPublicKey publicKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm, BouncyCastleProvider.PROVIDER_NAME);
     return encryptChunks(cipher, src, publicKey);
@@ -107,85 +72,52 @@ public final class RSA {
 
   private static byte[] encryptChunks(Cipher cipher, byte[] src, RSAPublicKey publicKey) throws GeneralSecurityException {
     cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+
     final int blockSize = publicKey.getModulus().bitLength() / 8 - 11; // PKCS#1 padding overhead is 11
     final int length = src.length;
-    byte[] dst = new byte[0];
-    try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
-      for (int offset = 0; offset < length; offset += blockSize) {
-        int size = Math.min(blockSize, length - offset);
-        byte[] chunk = new byte[size];
-        System.arraycopy(src, offset, chunk, 0, size);
-        byte[] encrypted = cipher.doFinal(chunk);
-        output.write(encrypted);
-      }
-      output.flush();
-      dst = output.toByteArray();
-    } catch (IOException ignored) {
+    ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+    for (int offset = 0; offset < length; offset += blockSize) {
+      int size = Math.min(blockSize, length - offset);
+      byte[] chunk = new byte[size];
+      System.arraycopy(src, offset, chunk, 0, size);
+      byte[] encrypted = cipher.doFinal(chunk);
+      output.writeBytes(encrypted);
     }
-    return dst;
+
+    return output.toByteArray();
   }
 
   // endregion
 
   // region decrypt
 
-  /**
-   * decrypt data with given algorithm and standard provider
-   *
-   * @param src        data to decrypt
-   * @param privateKey rsa private key
-   * @param algorithm  rsa algorithm
-   *
-   * @return decrypted data
-   */
   public static byte[] decrypt(byte[] src, RSAPrivateKey privateKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm);
-    cipher.init(Cipher.DECRYPT_MODE, privateKey);
-    return cipher.doFinal(src);
+    return decrypt(cipher, src, privateKey);
   }
 
-  /**
-   * decrypt data with given algorithm and {@link BouncyCastleProvider}
-   *
-   * @param src        data to decrypt
-   * @param privateKey rsa private key
-   * @param algorithm  rsa algorithm
-   *
-   * @return decrypted data
-   */
-  public static byte[] decryptBC(byte[] src, RSAPrivateKey privateKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
+  public static byte[] decryptWithBC(byte[] src, RSAPrivateKey privateKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm, BouncyCastleProvider.PROVIDER_NAME);
+    return decrypt(cipher, src, privateKey);
+  }
+
+  private static byte[] decrypt(Cipher cipher, byte[] src, RSAPrivateKey privateKey) throws GeneralSecurityException {
+    Objects.requireNonNull(privateKey);
     cipher.init(Cipher.DECRYPT_MODE, privateKey);
     return cipher.doFinal(src);
   }
 
-  /**
-   * decrypt large data in chunks with given algorithm and standard provider
-   *
-   * @param src        data to decrypt
-   * @param privateKey rsa private key
-   * @param algorithm  rsa algorithm
-   *
-   * @return decrypted data
-   */
+
   public static byte[] decryptChunks(byte[] src, RSAPrivateKey privateKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm);
     return decryptChunks(cipher, src, privateKey);
   }
 
-  /**
-   * decrypt large data in chunks with given algorithm and {@link BouncyCastleProvider}
-   *
-   * @param src        data to decrypt
-   * @param privateKey rsa private key
-   * @param algorithm  rsa algorithm
-   *
-   * @return decrypted data
-   */
-  public static byte[] decryptChunksBC(byte[] src, RSAPrivateKey privateKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
+  public static byte[] decryptChunksWithBC(byte[] src, RSAPrivateKey privateKey, RSAAlgorithm algorithm) throws GeneralSecurityException {
     Objects.requireNonNull(algorithm);
     Cipher cipher = Cipher.getInstance(algorithm.algorithm, BouncyCastleProvider.PROVIDER_NAME);
     return decryptChunks(cipher, src, privateKey);
@@ -193,22 +125,20 @@ public final class RSA {
 
   private static byte[] decryptChunks(Cipher cipher, byte[] src, RSAPrivateKey privateKey) throws GeneralSecurityException {
     cipher.init(Cipher.DECRYPT_MODE, privateKey);
+
     final int blockSize = privateKey.getModulus().bitLength() / 8;
     final int length = src.length;
-    byte[] dst = new byte[0];
-    try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
-      for (int offset = 0; offset < length; offset += blockSize) {
-        int size = Math.min(blockSize, length - offset);
-        byte[] chunk = new byte[size];
-        System.arraycopy(src, offset, chunk, 0, size);
-        byte[] decrypted = cipher.doFinal(chunk);
-        output.write(decrypted);
-      }
-      output.flush();
-      dst = output.toByteArray();
-    } catch (IOException ignored) {
+    ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+    for (int offset = 0; offset < length; offset += blockSize) {
+      int size = Math.min(blockSize, length - offset);
+      byte[] chunk = new byte[size];
+      System.arraycopy(src, offset, chunk, 0, size);
+      byte[] decrypted = cipher.doFinal(chunk);
+      output.writeBytes(decrypted);
     }
-    return dst;
+
+    return output.toByteArray();
   }
 
   // endregion
@@ -216,19 +146,15 @@ public final class RSA {
   // region sign / verify
 
   public static byte[] sign(byte[] src, RSAPrivateKey privateKey, RSASignAlgorithm algorithm) throws GeneralSecurityException {
-    if (algorithm == null) {
-      throw new IllegalArgumentException("algorithm cannot be null");
-    }
+    Objects.requireNonNull(algorithm);
     Signature signature = Signature.getInstance(algorithm.algorithm);
     signature.initSign(privateKey);
     signature.update(src);
     return signature.sign();
   }
 
-  public static byte[] signBC(byte[] src, RSAPrivateKey privateKey, RSASignAlgorithm algorithm) throws GeneralSecurityException {
-    if (algorithm == null) {
-      throw new IllegalArgumentException("algorithm cannot be null");
-    }
+  public static byte[] signWithBC(byte[] src, RSAPrivateKey privateKey, RSASignAlgorithm algorithm) throws GeneralSecurityException {
+    Objects.requireNonNull(algorithm);
     Signature signature = Signature.getInstance(algorithm.algorithm, BouncyCastleProvider.PROVIDER_NAME);
     signature.initSign(privateKey);
     signature.update(src);
@@ -236,19 +162,15 @@ public final class RSA {
   }
 
   public static boolean verify(byte[] src, RSAPublicKey publicKey, RSASignAlgorithm algorithm, byte[] sign) throws GeneralSecurityException {
-    if (algorithm == null) {
-      throw new IllegalArgumentException("algorithm cannot be null");
-    }
+    Objects.requireNonNull(algorithm);
     Signature signature = Signature.getInstance(algorithm.algorithm);
     signature.initVerify(publicKey);
     signature.update(src);
     return signature.verify(sign);
   }
 
-  public static boolean verifyBC(byte[] src, RSAPublicKey publicKey, RSASignAlgorithm algorithm, byte[] sign) throws GeneralSecurityException {
-    if (algorithm == null) {
-      throw new IllegalArgumentException("algorithm cannot be null");
-    }
+  public static boolean verifyWithBC(byte[] src, RSAPublicKey publicKey, RSASignAlgorithm algorithm, byte[] sign) throws GeneralSecurityException {
+    Objects.requireNonNull(algorithm);
     Signature signature = Signature.getInstance(algorithm.algorithm, BouncyCastleProvider.PROVIDER_NAME);
     signature.initVerify(publicKey);
     signature.update(src);
@@ -263,7 +185,19 @@ public final class RSA {
     if (keySize < 1024) {
       throw new IllegalArgumentException("illegal key size: %d".formatted(keySize));
     }
-    KeyPairGenerator generator = KeyPairGenerator.getInstance(ALGORITHM, BouncyCastleProvider.PROVIDER_NAME);
+
+    KeyPairGenerator generator = KeyPairGenerator.getInstance(RSAAlgorithm.RSA.algorithm);
+    generator.initialize(keySize);
+    KeyPair keyPair = generator.generateKeyPair();
+    return RSAKeyPair.fromKeyPair(keyPair);
+  }
+
+  public static RSAKeyPair generateKeyPairWithBC(int keySize) throws GeneralSecurityException {
+    if (keySize < 1024) {
+      throw new IllegalArgumentException("illegal key size: %d".formatted(keySize));
+    }
+
+    KeyPairGenerator generator = KeyPairGenerator.getInstance(RSAAlgorithm.RSA.algorithm, BouncyCastleProvider.PROVIDER_NAME);
     generator.initialize(keySize);
     KeyPair keyPair = generator.generateKeyPair();
     return RSAKeyPair.fromKeyPair(keyPair);
@@ -273,12 +207,22 @@ public final class RSA {
     if (privateKey == null) {
       throw new IllegalArgumentException("privateKey cannot be null");
     }
-    if (!privateKey.getAlgorithm().equalsIgnoreCase(ALGORITHM)) {
-      throw new IllegalArgumentException("private key algorithm not supported: %s".formatted(privateKey.getAlgorithm()));
+    if (privateKey instanceof RSAPrivateCrtKey crtKey) {
+      RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(crtKey.getModulus(), crtKey.getPublicExponent());
+      KeyFactory keyFactory = KeyFactory.getInstance(RSAAlgorithm.RSA.algorithm);
+      return (RSAPublicKey) keyFactory.generatePublic(rsaPublicKeySpec);
+    } else {
+      throw new IllegalArgumentException("private key must be a RSAPrivateCrtKey");
+    }
+  }
+
+  public static RSAPublicKey generatePublicKeyWithBC(PrivateKey privateKey) throws GeneralSecurityException {
+    if (privateKey == null) {
+      throw new IllegalArgumentException("privateKey cannot be null");
     }
     if (privateKey instanceof RSAPrivateCrtKey crtKey) {
       RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(crtKey.getModulus(), crtKey.getPublicExponent());
-      KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, BouncyCastleProvider.PROVIDER_NAME);
+      KeyFactory keyFactory = KeyFactory.getInstance(RSAAlgorithm.RSA.algorithm, BouncyCastleProvider.PROVIDER_NAME);
       return (RSAPublicKey) keyFactory.generatePublic(rsaPublicKeySpec);
     } else {
       throw new IllegalArgumentException("private key must be a RSAPrivateCrtKey");
@@ -294,7 +238,6 @@ public final class RSA {
       throw new IllegalArgumentException("content cannot be null");
     }
     PemObject pemObject = readPemObject(content);
-    assurePemObject(pemObject);
     // PKCS1 -> PKCS8
     AlgorithmIdentifier algorithmIdentifier = new AlgorithmIdentifier(PKCSObjectIdentifiers.pkcs8ShroudedKeyBag);
     ASN1Object asn1Object = ASN1ObjectIdentifier.fromByteArray(pemObject.getContent());
@@ -302,11 +245,11 @@ public final class RSA {
     byte[] pkcs8Bytes = privateKeyInfo.getEncoded();
     // recover rsa private key
     PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(pkcs8Bytes);
-    KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, BouncyCastleProvider.PROVIDER_NAME);
+    KeyFactory keyFactory = KeyFactory.getInstance(RSAAlgorithm.RSA.algorithm);
     return (RSAPrivateKey) keyFactory.generatePrivate(spec);
   }
 
-  public static RSAPrivateKey fromPKCS1ToPrivateKeyBC(String content) throws IOException {
+  public static RSAPrivateKey fromPKCS1ToPrivateKeyWithBC(String content) throws IOException {
     if (content == null) {
       throw new IllegalArgumentException("content cannot be null");
     }
@@ -326,9 +269,8 @@ public final class RSA {
       throw new IllegalArgumentException("content cannot be null");
     }
     PemObject pemObject = readPemObject(content);
-    assurePemObject(pemObject);
     PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(pemObject.getContent());
-    KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, BouncyCastleProvider.PROVIDER_NAME);
+    KeyFactory keyFactory = KeyFactory.getInstance(RSAAlgorithm.RSA.algorithm);
     return (RSAPrivateKey) keyFactory.generatePrivate(spec);
   }
 
@@ -336,12 +278,9 @@ public final class RSA {
     if (content == null) {
       throw new IllegalArgumentException("content cannot be null");
     }
-
     PemObject pemObject = readPemObject(content);
-    assurePemObject(pemObject);
-
     X509EncodedKeySpec spec = new X509EncodedKeySpec(pemObject.getContent());
-    KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+    KeyFactory keyFactory = KeyFactory.getInstance(RSAAlgorithm.RSA.algorithm);
     return (RSAPublicKey) keyFactory.generatePublic(spec);
   }
 
@@ -349,7 +288,7 @@ public final class RSA {
     BigInteger modulus = new BigInteger(1, n);
     BigInteger exponent = new BigInteger(1, e);
     RSAPublicKeySpec spec = new RSAPublicKeySpec(modulus, exponent);
-    KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, BouncyCastleProvider.PROVIDER_NAME);
+    KeyFactory keyFactory = KeyFactory.getInstance(RSAAlgorithm.RSA.algorithm);
     return (RSAPublicKey) keyFactory.generatePublic(spec);
   }
 
@@ -358,15 +297,9 @@ public final class RSA {
     try (PemReader pemReader = new PemReader(new StringReader(content))) {
       pemObject = pemReader.readPemObject();
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException("cannot read pem object", e);
     }
     return pemObject;
-  }
-
-  private static void assurePemObject(PemObject pemObject) {
-    if (pemObject == null) {
-      throw new RuntimeException("failed to read pem object");
-    }
   }
 
   // endregion

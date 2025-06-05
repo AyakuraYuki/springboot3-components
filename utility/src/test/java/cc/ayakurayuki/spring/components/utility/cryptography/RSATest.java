@@ -2,13 +2,12 @@ package cc.ayakurayuki.spring.components.utility.cryptography;
 
 import cc.ayakurayuki.spring.components.utility.cryptography.rsa.RSA;
 import cc.ayakurayuki.spring.components.utility.cryptography.rsa.RSAAlgorithm;
+import cc.ayakurayuki.spring.components.utility.cryptography.rsa.RSAKeyPair;
 import java.nio.charset.StandardCharsets;
-import java.security.Security;
+import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -20,9 +19,18 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class RSATest {
 
-  @Before
-  public void setup() {
-    Security.addProvider(new BouncyCastleProvider());
+  @Test
+  public void testGenerateKeyPair() throws Exception {
+    RSAKeyPair keyPair = RSA.generateKeyPair(2048);
+    System.out.println(keyPair.privateKey() instanceof RSAPrivateCrtKey);
+    System.out.println(keyPair.privateKey().getAlgorithm());
+
+    keyPair = RSA.generateKeyPairWithBC(2048);
+    System.out.println(keyPair.privateKey() instanceof RSAPrivateCrtKey);
+    System.out.println(keyPair.privateKey().getAlgorithm());
+
+    RSAPublicKey publicKey = RSA.generatePublicKey(keyPair.privateKey());
+    System.out.println(Base64.getEncoder().encodeToString(publicKey.getEncoded()));
   }
 
   @Test
@@ -78,7 +86,7 @@ public class RSATest {
     RSAPrivateKey privateKey = RSA.fromPKCS8ToPrivateKey(privateKeyContent);
     dst = RSA.decryptChunks(dst, privateKey, RSAAlgorithm.RSA);
     System.out.println(new String(dst, StandardCharsets.UTF_8));
-    dst = RSA.decryptChunksBC(Base64.getDecoder().decode(encrypted), privateKey, RSAAlgorithm.PKCS1v15);
+    dst = RSA.decryptChunksWithBC(Base64.getDecoder().decode(encrypted), privateKey, RSAAlgorithm.PKCS1v15);
     System.out.println(new String(dst, StandardCharsets.UTF_8));
   }
 

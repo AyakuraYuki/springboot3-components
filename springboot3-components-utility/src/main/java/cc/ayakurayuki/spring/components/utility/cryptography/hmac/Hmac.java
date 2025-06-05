@@ -1,13 +1,11 @@
 package cc.ayakurayuki.spring.components.utility.cryptography.hmac;
 
-import java.nio.charset.StandardCharsets;
+import cc.ayakurayuki.spring.components.utility.cryptography.hex.Hex;
 import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.Security;
-import java.security.SignatureException;
 import java.util.Base64;
+import java.util.Base64.Encoder;
+import java.util.Objects;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -17,51 +15,133 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
  */
 public final class Hmac {
 
-  private static final String HmacSHA1   = "HmacSHA1";
-  private static final String HmacSHA256 = "HmacSHA256";
-
   static {
     Security.addProvider(new BouncyCastleProvider());
   }
 
-  public static String hmacSHA1(String data, String key) throws GeneralSecurityException {
-    return hmac(data, key, HmacSHA1);
+  public static byte[] hmac(HmacAlgorithm algorithm, byte[] data, byte[] key) throws GeneralSecurityException {
+    Objects.requireNonNull(algorithm);
+    SecretKeySpec spec = new SecretKeySpec(key, algorithm.algorithm);
+    Mac mac = Mac.getInstance(spec.getAlgorithm(), BouncyCastleProvider.PROVIDER_NAME);
+    mac.init(spec);
+    return mac.doFinal(data);
   }
 
-  public static String hmacSHA1WithURLSafe(String data, String key) throws GeneralSecurityException {
-    return hmacWithURLSafe(data, key, HmacSHA1);
+  public static String hmacToBase64(HmacAlgorithm algorithm, byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToBase64(algorithm, data, key, Base64.getEncoder());
   }
 
-  public static String hmacSHA256(String data, String key) throws GeneralSecurityException {
-    return hmac(data, key, HmacSHA256);
+  public static String hmacToURLBase64(HmacAlgorithm algorithm, byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToBase64(algorithm, data, key, Base64.getUrlEncoder());
   }
 
-  public static String hmacSHA256WithURLSafe(String data, String key) throws GeneralSecurityException {
-    return hmacWithURLSafe(data, key, HmacSHA256);
+  public static String hmacToMimeBase64(HmacAlgorithm algorithm, byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToBase64(algorithm, data, key, Base64.getMimeEncoder());
   }
 
-  private static String hmac(String data, String key, String algorithm) throws GeneralSecurityException {
-    try {
-      SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), algorithm);
-      Mac mac = Mac.getInstance(secretKeySpec.getAlgorithm(), BouncyCastleProvider.PROVIDER_NAME);
-      mac.init(secretKeySpec);
-      byte[] hmac = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-      return new String(Base64.getEncoder().encode(hmac));
-    } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-      throw new SignatureException("Failed to get hmac.", e);
+  public static String hmacToBase64(HmacAlgorithm algorithm, byte[] data, byte[] key, Encoder encoder) throws GeneralSecurityException {
+    Objects.requireNonNull(encoder);
+    byte[] dst = hmac(algorithm, data, key);
+    if (dst == null) {
+      return "";
     }
+    return encoder.encodeToString(dst);
   }
 
-  private static String hmacWithURLSafe(String data, String key, String algorithm) throws GeneralSecurityException {
-    try {
-      SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), algorithm);
-      Mac mac = Mac.getInstance(secretKeySpec.getAlgorithm(), BouncyCastleProvider.PROVIDER_NAME);
-      mac.init(secretKeySpec);
-      byte[] hmac = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
-      return new String(Base64.getUrlEncoder().encode(hmac));
-    } catch (NoSuchAlgorithmException | InvalidKeyException | NoSuchProviderException e) {
-      throw new SignatureException("Failed to get hmac.", e);
+  public static String hmacToHex(HmacAlgorithm algorithm, byte[] data, byte[] key) throws GeneralSecurityException {
+    byte[] dst = hmac(algorithm, data, key);
+    if (dst == null) {
+      return "";
     }
+    return Hex.toHexString(dst);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  public static byte[] hmacMD5(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmac(HmacAlgorithm.HmacMD5, data, key);
+  }
+
+  public static String hmacMD5ToBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToBase64(HmacAlgorithm.HmacMD5, data, key);
+  }
+
+  public static String hmacMD5ToURLBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToURLBase64(HmacAlgorithm.HmacMD5, data, key);
+  }
+
+  public static String hmacMD5ToMimeBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToMimeBase64(HmacAlgorithm.HmacMD5, data, key);
+  }
+
+  public static String hmacMD5ToHex(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToHex(HmacAlgorithm.HmacMD5, data, key);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  public static byte[] hmacSHA1(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmac(HmacAlgorithm.HmacSHA1, data, key);
+  }
+
+  public static String hmacSHA1ToBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToBase64(HmacAlgorithm.HmacSHA1, data, key);
+  }
+
+  public static String hmacSHA1ToURLBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToURLBase64(HmacAlgorithm.HmacSHA1, data, key);
+  }
+
+  public static String hmacSHA1ToMimeBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToMimeBase64(HmacAlgorithm.HmacSHA1, data, key);
+  }
+
+  public static String hmacSHA1ToHex(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToHex(HmacAlgorithm.HmacSHA1, data, key);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  public static byte[] hmacSHA256(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmac(HmacAlgorithm.HmacSHA256, data, key);
+  }
+
+  public static String hmacSHA256ToBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToBase64(HmacAlgorithm.HmacSHA256, data, key);
+  }
+
+  public static String hmacSHA256ToURLBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToURLBase64(HmacAlgorithm.HmacSHA256, data, key);
+  }
+
+  public static String hmacSHA256ToMimeBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToMimeBase64(HmacAlgorithm.HmacSHA256, data, key);
+  }
+
+  public static String hmacSHA256ToHex(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToHex(HmacAlgorithm.HmacSHA256, data, key);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+
+  public static byte[] hmacSHA512(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmac(HmacAlgorithm.HmacSHA512, data, key);
+  }
+
+  public static String hmacSHA512ToBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToBase64(HmacAlgorithm.HmacSHA512, data, key);
+  }
+
+  public static String hmacSHA512ToURLBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToURLBase64(HmacAlgorithm.HmacSHA512, data, key);
+  }
+
+  public static String hmacSHA512ToMimeBase64(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToMimeBase64(HmacAlgorithm.HmacSHA512, data, key);
+  }
+
+  public static String hmacSHA512ToHex(byte[] data, byte[] key) throws GeneralSecurityException {
+    return hmacToHex(HmacAlgorithm.HmacSHA512, data, key);
   }
 
 }

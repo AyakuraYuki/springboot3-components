@@ -2,7 +2,7 @@ package cc.ayakurayuki.spring.components.utility.cryptography.hex;
 
 /**
  * {@link Hex} extends to {@link org.bouncycastle.util.encoders.Hex}, and presents some
- * useful methods.
+ * funny methods.
  *
  * @author Ayakura Yuki
  */

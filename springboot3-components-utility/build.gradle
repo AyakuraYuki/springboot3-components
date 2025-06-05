@@ -11,25 +11,20 @@ repositories {
 dependencies {
   implementation project(':springboot3-components-boot')
 
-  implementation("com.google.guava:guava:${guavaVersion}")
-  implementation("com.google.code.gson:gson:${gsonVersion}")
+  implementation(libs.guava)
+  implementation(libs.gson)
 
-  implementation("org.apache.commons:commons-lang3:${commonsLang3Version}")
+  implementation(libs.commons.lang3)
 
-  implementation("org.bouncycastle:bcprov-jdk18on:${bouncyCastleVersion}")
-  implementation("org.bouncycastle:bcpkix-jdk18on:${bouncyCastleVersion}")
+  implementation(libs.bcprov.jdk18on)
+  implementation(libs.bcpkix.jdk18on)
 
-  implementation("org.slf4j:slf4j-api:${slf4jVersion}")
+  implementation(libs.slf4j.api)
 
-  compileOnly("org.projectlombok:lombok:${lombokVersion}")
-  annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-
-  testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
-  testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-
-  testImplementation platform('org.junit:junit-bom:5.10.0')
-  testImplementation 'org.junit.jupiter:junit-jupiter'
-  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  compileOnly(libs.lombok)
+  annotationProcessor(libs.lombok)
+  testCompileOnly(libs.lombok)
+  testAnnotationProcessor(libs.lombok)
 }
 
 test {

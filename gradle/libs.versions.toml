@@ -1,0 +1,26 @@
+[versions]
+springboot = "3.5.0"
+
+bouncyCastle = "1.80"
+commonsLang3 = "3.17.0"
+grpc = "1.73.0"
+gson = "2.13.1"
+guava = "33.4.8-jre"
+lombok = "1.18.38"
+protobuf = "4.30.0"
+slf4j = "2.0.17"
+
+junit = "5.10.0"
+
+[libraries]
+bcprov-jdk18on = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncyCastle" }
+bcpkix-jdk18on = { group = "org.bouncycastle", name = "bcpkix-jdk18on", version.ref = "bouncyCastle" }
+commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang3" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+
+junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }

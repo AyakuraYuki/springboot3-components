@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Ayakura Yuki
  */
-public final class EnhancedStrings {
+public abstract class EnhancedStrings {
 
   /**
    * Gets the visual length of a text sequence.

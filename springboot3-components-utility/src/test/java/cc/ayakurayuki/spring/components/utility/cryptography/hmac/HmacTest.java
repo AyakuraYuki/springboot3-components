@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author Ayakura Yuki
- * @date 2025/06/05-21:14
  */
 class HmacTest {
 

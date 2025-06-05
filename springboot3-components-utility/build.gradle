@@ -1,0 +1,33 @@
+plugins {
+  id 'java'
+}
+
+description = "Tools, toolbox, utils, whatever you call, this is the module that provides static methods, enums, e.g."
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(':springboot3-components-boot')
+
+  implementation("com.google.guava:guava:${guavaVersion}")
+  implementation("com.google.code.gson:gson:${gsonVersion}")
+
+  implementation("org.apache.commons:commons-lang3:${commonsLang3Version}")
+
+  implementation("org.bouncycastle:bcprov-jdk18on:${bouncyCastleVersion}")
+  implementation("org.bouncycastle:bcpkix-jdk18on:${bouncyCastleVersion}")
+
+  implementation("org.slf4j:slf4j-api:${slf4jVersion}")
+
+  compileOnly("org.projectlombok:lombok:${lombokVersion}")
+  annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+  testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+  testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+}
+
+test {
+  useJUnitPlatform()
+}

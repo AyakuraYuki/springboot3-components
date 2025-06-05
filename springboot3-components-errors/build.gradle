@@ -1,0 +1,9 @@
+plugins {
+  id 'java'
+}
+
+description = "Server exception handling component with unified error encapsulation and predefined status codes."
+
+repositories {
+  mavenCentral()
+}

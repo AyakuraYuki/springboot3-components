@@ -13,16 +13,13 @@ dependencies {
 
   implementation(libs.guava)
   implementation(libs.gson)
-
   implementation platform(libs.jackson.bom)
   implementation(libs.jackson.annotations)
   implementation(libs.jackson.databind)
-
   implementation(libs.commons.lang3)
-
   implementation(libs.bcprov.jdk18on)
   implementation(libs.bcpkix.jdk18on)
-
+  implementation(libs.singleflight)
   implementation(libs.slf4j.api)
 
   compileOnly(libs.lombok)

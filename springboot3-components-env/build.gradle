@@ -7,8 +7,15 @@ repositories {
 }
 
 dependencies {
-  testImplementation platform('org.junit:junit-bom:5.10.0')
-  testImplementation 'org.junit.jupiter:junit-jupiter'
+  implementation project(":springboot3-components-utility")
+
+  implementation(libs.guava)
+  implementation(libs.slf4j.api)
+
+  compileOnly(libs.lombok)
+  annotationProcessor(libs.lombok)
+  testCompileOnly(libs.lombok)
+  testAnnotationProcessor(libs.lombok)
 }
 
 test {

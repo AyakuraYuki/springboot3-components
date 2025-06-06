@@ -7,8 +7,11 @@ repositories {
 }
 
 dependencies {
-  testImplementation platform('org.junit:junit-bom:5.10.0')
-  testImplementation 'org.junit.jupiter:junit-jupiter'
+  implementation(libs.opentelemetry.api)
+  implementation(libs.opentelemetry.sdk)
+  implementation(libs.opentelemetry.sdk.trace)
+  implementation(libs.opentelemetry.exporter.otlp)
+  implementation(libs.opentelemetry.extension.trace.propagators)
 }
 
 test {

@@ -7,8 +7,13 @@ repositories {
 }
 
 dependencies {
-  testImplementation platform('org.junit:junit-bom:5.10.0')
-  testImplementation 'org.junit.jupiter:junit-jupiter'
+  implementation project(":springboot3-components-boot")
+  implementation project(":springboot3-components-utility")
+
+  implementation(libs.guava)
+  implementation(libs.simpleclient.hotspot)
+  implementation(libs.simpleclient.servlet)
+  implementation(libs.micrometer.registry.prometheus)
 }
 
 test {

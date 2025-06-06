@@ -7,15 +7,7 @@ repositories {
 }
 
 dependencies {
-  implementation project(":springboot3-components-utility")
-
   implementation(libs.guava)
-  implementation(libs.slf4j.api)
-
-  compileOnly(libs.lombok)
-  annotationProcessor(libs.lombok)
-  testCompileOnly(libs.lombok)
-  testAnnotationProcessor(libs.lombok)
 }
 
 test {

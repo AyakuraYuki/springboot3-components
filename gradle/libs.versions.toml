@@ -9,6 +9,8 @@ guava = "33.4.8-jre"
 jackson = "2.19.0"
 logback = "1.5.18"
 lombok = "1.18.38"
+opentelemetry = "1.49.0"
+prometheusClient = "0.16.0"
 protobuf = "4.30.0"
 singleflight = "1.2.0"
 slf4j = "2.0.17"
@@ -29,6 +31,15 @@ logback-core = { group = "ch.qos.logback", name = "logback-core", version.ref = 
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 singleflight = { group = "cc.ayakurayuki.repo", name = "singleflight", version.ref = "singleflight" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+
+opentelemetry-api = { group = "io.opentelemetry", name = "opentelemetry-api", version.ref = "opentelemetry" }
+opentelemetry-exporter-otlp = { group = "io.opentelemetry", name = "opentelemetry-exporter-otlp", version.ref = "opentelemetry" }
+opentelemetry-extension-trace-propagators = { group = "io.opentelemetry", name = "opentelemetry-extension-trace-propagators", version.ref = "opentelemetry" }
+opentelemetry-sdk = { group = "io.opentelemetry", name = "opentelemetry-sdk", version.ref = "opentelemetry" }
+opentelemetry-sdk-trace = { group = "io.opentelemetry", name = "opentelemetry-sdk-trace", version.ref = "opentelemetry" }
+simpleclient-hotspot = { group = "io.prometheus", name = "simpleclient_hotspot", version.ref = "prometheusClient" }
+simpleclient-servlet = { group = "io.prometheus", name = "simpleclient_servlet", version.ref = "prometheusClient" }
+micrometer-registry-prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus", version = "1.15.0" }
 
 junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }

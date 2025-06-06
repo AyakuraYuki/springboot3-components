@@ -6,6 +6,7 @@ commonsLang3 = "3.17.0"
 grpc = "1.73.0"
 gson = "2.13.1"
 guava = "33.4.8-jre"
+jackson = "2.19.0"
 lombok = "1.18.38"
 protobuf = "4.30.0"
 slf4j = "2.0.17"
@@ -18,6 +19,9 @@ bcpkix-jdk18on = { group = "org.bouncycastle", name = "bcpkix-jdk18on", version.
 commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang3" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+jackson-bom = { group = "com.fasterxml.jackson", name = "jackson-bom", version.ref = "jackson" }
+jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-annotations" }
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind" }
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 

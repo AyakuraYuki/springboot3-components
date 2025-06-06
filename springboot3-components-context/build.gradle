@@ -1,5 +1,6 @@
 plugins {
   id 'java'
+  id "com.google.protobuf" version "0.9.5"
 }
 
 repositories {
@@ -7,8 +8,12 @@ repositories {
 }
 
 dependencies {
-  testImplementation platform('org.junit:junit-bom:5.10.0')
-  testImplementation 'org.junit.jupiter:junit-jupiter'
+  implementation project(":springboot3-components-stats")
+  implementation project(":springboot3-components-utility")
+
+  implementation(libs.grpc.protobuf)
+  implementation(libs.jakarta.servlet.api)
+  implementation(libs.opentelemetry.context)
 }
 
 test {

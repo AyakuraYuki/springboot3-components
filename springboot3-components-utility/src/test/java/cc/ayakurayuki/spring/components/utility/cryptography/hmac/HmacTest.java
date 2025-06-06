@@ -21,11 +21,11 @@ class HmacTest {
 
   @Test
   void testBCHmac() throws Exception {
-    var key = "00000000000000000000000000000000".getBytes(StandardCharsets.UTF_8);
-    var spec = new SecretKeySpec(key, "HmacSHA256");
-    var mac = Mac.getInstance(spec.getAlgorithm(), BouncyCastleProvider.PROVIDER_NAME);
+    byte[] key = "00000000000000000000000000000000".getBytes(StandardCharsets.UTF_8);
+    SecretKeySpec spec = new SecretKeySpec(key, "HmacSHA256");
+    Mac mac = Mac.getInstance(spec.getAlgorithm(), BouncyCastleProvider.PROVIDER_NAME);
     mac.init(spec);
-    var dst = mac.doFinal("apple".getBytes(StandardCharsets.UTF_8));
+    byte[] dst = mac.doFinal("apple".getBytes(StandardCharsets.UTF_8));
     System.out.println(Base64.getEncoder().encodeToString(dst));
   }
 

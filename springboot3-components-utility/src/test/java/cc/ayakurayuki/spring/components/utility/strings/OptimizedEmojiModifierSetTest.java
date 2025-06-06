@@ -11,7 +11,7 @@ class OptimizedEmojiModifierSetTest {
 
   @Test
   void testContains() {
-    var bitset = new OptimizedEmojiModifierSet();
+    OptimizedEmojiModifierSet bitset = new OptimizedEmojiModifierSet();
     bitset.add(UnicodeGraphemeAnalyzer.ModifierBlack);
     bitset.add(UnicodeGraphemeAnalyzer.ModifierColorFul);
     bitset.add(UnicodeGraphemeAnalyzer.ModifierKeyCap);

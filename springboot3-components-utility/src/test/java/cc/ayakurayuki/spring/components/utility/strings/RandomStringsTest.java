@@ -21,31 +21,31 @@ class RandomStringsTest {
 
   @Test
   void test() {
-    var reLower = Pattern.compile("[a-z]*");
+    Pattern reLower = Pattern.compile("[a-z]*");
     assert reLower.matcher(RandomStrings.random(10, RandomStrings.Lower)).matches();
     assert !reLower.matcher(RandomStrings.random(10, RandomStrings.LowerDigit)).matches();
 
-    var reUpper = Pattern.compile("[A-Z]*");
+    Pattern reUpper = Pattern.compile("[A-Z]*");
     assert reUpper.matcher(RandomStrings.random(10, RandomStrings.Upper)).matches();
     assert !reUpper.matcher(RandomStrings.random(10, RandomStrings.LowerDigit)).matches();
 
-    var reDigit = Pattern.compile("[0-9]*");
+    Pattern reDigit = Pattern.compile("[0-9]*");
     assert reDigit.matcher(RandomStrings.random(10, RandomStrings.Digit)).matches();
     assert !reDigit.matcher(RandomStrings.random(10, RandomStrings.Upper)).matches();
 
-    var reLowerDigit = Pattern.compile("[a-z0-9]*");
+    Pattern reLowerDigit = Pattern.compile("[a-z0-9]*");
     assert reLowerDigit.matcher(RandomStrings.random(10, RandomStrings.LowerDigit)).matches();
     assert !reLowerDigit.matcher(RandomStrings.random(10, RandomStrings.Upper)).matches();
 
-    var reUpperDigit = Pattern.compile("[A-Z0-9]*");
+    Pattern reUpperDigit = Pattern.compile("[A-Z0-9]*");
     assert reUpperDigit.matcher(RandomStrings.random(10, RandomStrings.UpperDigit)).matches();
     assert !reUpperDigit.matcher(RandomStrings.random(10, RandomStrings.Lower)).matches();
 
-    var reLowerUpper = Pattern.compile("[a-zA-Z]*");
+    Pattern reLowerUpper = Pattern.compile("[a-zA-Z]*");
     assert reLowerUpper.matcher(RandomStrings.random(10, RandomStrings.LowerUpper)).matches();
     assert !reLowerUpper.matcher(RandomStrings.random(10, RandomStrings.Digit)).matches();
 
-    var reLowerUpperDigit = Pattern.compile("[a-zA-Z0-9]*");
+    Pattern reLowerUpperDigit = Pattern.compile("[a-zA-Z0-9]*");
     assert reLowerUpperDigit.matcher(RandomStrings.random(10, RandomStrings.LowerUpperDigit)).matches();
   }
 

@@ -1,5 +1,6 @@
 plugins {
   id 'java'
+  id 'java-library'
 }
 
 description = "Tools, toolbox, utils, whatever you call, this is the module that provides static methods, enums, e.g."
@@ -11,15 +12,16 @@ repositories {
 dependencies {
   implementation project(':springboot3-components-boot')
 
-  implementation(libs.guava)
-  implementation(libs.gson)
-  implementation platform(libs.jackson.bom)
-  implementation(libs.jackson.annotations)
-  implementation(libs.jackson.databind)
-  implementation(libs.commons.lang3)
   implementation(libs.bcprov.jdk18on)
   implementation(libs.bcpkix.jdk18on)
   implementation(libs.singleflight)
+  implementation platform(libs.jackson.bom)
+  implementation(libs.jackson.annotations)
+  implementation(libs.jackson.databind)
+
+  api(libs.commons.lang3)
+  api(libs.guava)
+  api(libs.gson)
 }
 
 test {

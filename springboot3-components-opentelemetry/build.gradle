@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
   implementation(libs.opentelemetry.api)
+  implementation(libs.opentelemetry.context)
   implementation(libs.opentelemetry.sdk)
   implementation(libs.opentelemetry.sdk.trace)
   implementation(libs.opentelemetry.exporter.otlp)

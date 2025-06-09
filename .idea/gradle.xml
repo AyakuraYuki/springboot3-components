@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/springboot3-components-env" />
             <option value="$PROJECT_DIR$/springboot3-components-errors" />
             <option value="$PROJECT_DIR$/springboot3-components-http" />
+            <option value="$PROJECT_DIR$/springboot3-components-http/springboot3-components-http-server" />
             <option value="$PROJECT_DIR$/springboot3-components-logging" />
             <option value="$PROJECT_DIR$/springboot3-components-opentelemetry" />
             <option value="$PROJECT_DIR$/springboot3-components-queue" />

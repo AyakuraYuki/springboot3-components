@@ -24,13 +24,6 @@ public class ServerException extends RuntimeException {
     this.code = code;
   }
 
-  @Override
-  public String toString() {
-    String s = getClass().getName();
-    String message = getLocalizedMessage();
-    return (message != null) ? (s + ": " + code + " " + message) : s;
-  }
-
   public static ServerException code(int code, String message, Object... args) {
     if (args.length == 0) {
       return new ServerException(code, message);
@@ -51,6 +44,13 @@ public class ServerException extends RuntimeException {
       return new ServerException(code, message, cause);
     }
     return new ServerException(code, String.format(message, args), cause);
+  }
+
+  @Override
+  public String toString() {
+    String s = getClass().getName();
+    String message = getLocalizedMessage();
+    return (message != null) ? (s + ": " + code + " " + message) : s;
   }
 
 }

@@ -47,6 +47,7 @@ public class ContextUtils {
     return Optional.ofNullable(userID).orElse(0L);
   }
 
+  @SuppressWarnings("rawtypes")
   private static String getFromParameter(String key) {
     Context context = Context.current();
     if (context instanceof HttpContext httpContext) {
@@ -58,6 +59,7 @@ public class ContextUtils {
     return "";
   }
 
+  @SuppressWarnings("rawtypes")
   private static String getFromHttpMetadata(String key) {
     Context context = Context.current();
     if (context instanceof HttpContext httpContext) {

@@ -21,6 +21,11 @@ public class Contexts {
     return context.getError() == 1;
   }
 
+  public static void setError(int error) {
+    Context context = Context.current();
+    context.setError(error);
+  }
+
   public static void set5xxNoLog() {
     Context context = Context.current();
     context.setError(-1);
@@ -29,11 +34,6 @@ public class Contexts {
   public static boolean is5xxWithLog() {
     Context context = Context.current();
     return context.getError() != -1;
-  }
-
-  public static void setError(int error) {
-    Context context = Context.current();
-    context.setError(error);
   }
 
   /**

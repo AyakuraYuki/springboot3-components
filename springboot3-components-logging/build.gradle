@@ -11,6 +11,9 @@ repositories {
 dependencies {
   implementation project(":springboot3-components-boot")
 
+  implementation(libs.gson)
+  implementation platform(libs.jackson.bom)
+  implementation(libs.jackson.databind)
   implementation(libs.logback.core)
   implementation(libs.logback.classic)
 }
@@ -18,3 +21,7 @@ dependencies {
 test {
   useJUnitPlatform()
 }
+
+//tasks.withType(JavaCompile) {
+//  options.compilerArgs += ["-Xlint:deprecation"]
+//}

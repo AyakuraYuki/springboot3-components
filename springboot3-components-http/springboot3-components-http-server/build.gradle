@@ -1,0 +1,29 @@
+plugins {
+  id 'java'
+}
+
+description = "HTTP Server components"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation project(":springboot3-components-boot")
+  implementation project(":springboot3-components-context")
+  implementation project(":springboot3-components-errors")
+  implementation project(":springboot3-components-stats")
+  implementation project(":springboot3-components-trace")
+  implementation project(":springboot3-components-utility")
+
+  implementation(libs.spring.boot.starter.web)
+  implementation(libs.opentelemetry.api)
+  implementation(libs.opentelemetry.context)
+
+  testImplementation platform('org.junit:junit-bom:5.10.0')
+  testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+  useJUnitPlatform()
+}

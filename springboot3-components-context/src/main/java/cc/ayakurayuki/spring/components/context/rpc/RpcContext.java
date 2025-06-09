@@ -17,11 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class RpcContext extends Context<FieldDescriptor, Object, String, String> {
 
-  @SuppressWarnings("rawtypes")
-  public static RpcContext create(Metadata metadata, ServerCall serverCall) {
-    return new RpcContext(metadata, serverCall);
-  }
-
   /**
    * Reference: <a href="https://github.com/grpc/grpc-java/blob/81da3eb95be37fa0647ce8da2e19de96ab84c600/context/src/test/java/io/grpc/ContextTest.java">ContextTest.java - grpc/grpc-java | Github.com</a>
    */
@@ -54,6 +49,11 @@ public final class RpcContext extends Context<FieldDescriptor, Object, String, S
     this.setPath(title);
     this.setRealPath(title);
     this.setIp(new IP(clientIP, remoteIP, 0));
+  }
+
+  @SuppressWarnings("rawtypes")
+  public static RpcContext create(Metadata metadata, ServerCall serverCall) {
+    return new RpcContext(metadata, serverCall);
   }
 
   @Override

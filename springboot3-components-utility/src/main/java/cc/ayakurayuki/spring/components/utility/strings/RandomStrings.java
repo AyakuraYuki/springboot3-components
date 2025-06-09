@@ -7,11 +7,6 @@ import java.util.Random;
  */
 public abstract class RandomStrings {
 
-  private static final String lower  = "abcdefghijklmnopqrstuvwxyz";
-  private static final String upper  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  private static final String digit  = "0123456789";
-  private static final String symbol = "!@#$%^&*()-_=+,./:;<>?[]{|}~\\\"'";
-
   public static final int Lower           = 1; // 1 << 0
   public static final int Upper           = 1 << 1; // 1 << 0
   public static final int Digit           = 1 << 2; // 1 << 0
@@ -19,6 +14,11 @@ public abstract class RandomStrings {
   public static final int LowerDigit      = Lower | Digit;
   public static final int UpperDigit      = Upper | Digit;
   public static final int LowerUpperDigit = Lower | Upper | Digit;
+
+  private static final String lower  = "abcdefghijklmnopqrstuvwxyz";
+  private static final String upper  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  private static final String digit  = "0123456789";
+  private static final String symbol = "!@#$%^&*()-_=+,./:;<>?[]{|}~\\\"'";
 
   public static String random(int size, int flags) {
     StringBuilder chars = new StringBuilder();

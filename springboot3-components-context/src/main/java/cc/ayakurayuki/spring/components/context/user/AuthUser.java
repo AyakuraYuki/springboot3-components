@@ -1,9 +1,9 @@
 package cc.ayakurayuki.spring.components.context.user;
 
 import cc.ayakurayuki.spring.components.context.User;
+import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nonnull;
 
 /**
  * @author Ayakura Yuki

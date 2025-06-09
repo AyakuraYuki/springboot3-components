@@ -16,7 +16,8 @@ public abstract class AYSimpleCollector<V extends IVector, C extends AYSimpleCol
   private final String   metricName;
   private final String   help;
   private final String[] labelNames;
-  protected     V        iVector;
+
+  protected V iVector;
 
   @SuppressWarnings({"rawtypes"})
   AYSimpleCollector(Builder b) {
@@ -28,20 +29,20 @@ public abstract class AYSimpleCollector<V extends IVector, C extends AYSimpleCol
     labelNames = b.labelNames;
   }
 
-  public abstract C register();
-
-  public abstract String getVectorName();
-
-  void checkState() {
-    Preconditions.checkState(iVector != null, String.format("%s must call register() method", getVectorName()));
-  }
-
   public static double escapeMillisFromNanos(long start, long end) {
     return escapeMillisFromNanos(end - start);
   }
 
   public static double escapeMillisFromNanos(long nanos) {
     return nanos / 1000000D;
+  }
+
+  public abstract C register();
+
+  public abstract String getVectorName();
+
+  void checkState() {
+    Preconditions.checkState(iVector != null, String.format("%s must call register() method", getVectorName()));
   }
 
   @SuppressWarnings({"rawtypes", "unchecked"})

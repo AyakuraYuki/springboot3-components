@@ -11,16 +11,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class CompositeOpenTelemetry implements OpenTelemetry {
 
-  @Override
-  public TracerProvider getTracerProvider() {
-    return this.activeOpenTelemetryRef.get().getTracerProvider();
-  }
-
-  @Override
-  public ContextPropagators getPropagators() {
-    return this.activeOpenTelemetryRef.get().getPropagators();
-  }
-
   private static final CompositeOpenTelemetry INSTANCE = new CompositeOpenTelemetry();
 
   private final OpenTelemetry                  defaultOpenTelemetry;
@@ -33,6 +23,16 @@ public class CompositeOpenTelemetry implements OpenTelemetry {
 
   public static CompositeOpenTelemetry get() {
     return INSTANCE;
+  }
+
+  @Override
+  public TracerProvider getTracerProvider() {
+    return this.activeOpenTelemetryRef.get().getTracerProvider();
+  }
+
+  @Override
+  public ContextPropagators getPropagators() {
+    return this.activeOpenTelemetryRef.get().getPropagators();
   }
 
   public boolean registerIfAbsent(final OpenTelemetry openTelemetry) {

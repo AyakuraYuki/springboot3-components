@@ -20,15 +20,9 @@ public class Environment<T> {
     this.value = value;
   }
 
-  @VisibleForTesting
-  String getName() {
-    return name;
-  }
-
   private static <T> Environment<T> empty(String name) {
     return new Environment<>(name);
   }
-
 
   /**
    * Create a {@link Key} with the given  name. Multiple different keys may have the same name.
@@ -73,7 +67,6 @@ public class Environment<T> {
     return new Environment<>(holder.name(), holder.value());
   }
 
-
   /**
    * Returns an {@code Environment} describing the given value, if non-{@code null}, otherwise returns an empty {@code Environment}.
    *
@@ -87,6 +80,10 @@ public class Environment<T> {
     return holder.value() == null ? empty(holder.name()) : new Environment<>(holder.name(), holder.value());
   }
 
+  @VisibleForTesting
+  String getName() {
+    return name;
+  }
 
   /**
    * formatted exception message

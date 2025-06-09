@@ -28,10 +28,6 @@ public final class HttpContext extends Context<String, String[], String, String>
   private static final Joiner           joiner          = Joiner.on(",").skipNulls();
   private static final List<String>     excludeParams   = Lists.newArrayList("phone");
 
-  public static HttpContext create(String patternUrl, HttpServletRequest request) {
-    return new HttpContext(patternUrl, request);
-  }
-
   private HttpContext(String patternUrl, HttpServletRequest request) {
     super();
     final String clientIP = request.getRemoteAddr();
@@ -58,6 +54,51 @@ public final class HttpContext extends Context<String, String[], String, String>
     } catch (Exception e) {
       log.error("this.setDebugHeader exception!!", e);
     }
+  }
+
+  public static HttpContext create(String patternUrl, HttpServletRequest request) {
+    return new HttpContext(patternUrl, request);
+  }
+
+  public static String assembleParamsToQueryString(Map<String, String> params, String charset) throws UnsupportedEncodingException {
+    if (params == null || params.isEmpty()) {
+      return null;
+    }
+
+    StringBuilder paramString = new StringBuilder();
+    boolean first = true;
+
+    for (Iterator<Entry<String, String>> iterator = params.entrySet().iterator(); iterator.hasNext(); first = false) {
+      Map.Entry<String, String> p = iterator.next();
+      String key = p.getKey();
+      String val = p.getValue();
+      if (!first) {
+        paramString.append("&");
+      }
+      paramString.append(key);
+      paramString.append("=");
+      if (val == null) {
+        continue;
+      }
+      if (charset != null && !charset.isEmpty()) {
+        String encodedValue = urlEncode(val, charset);
+        paramString.append(encodedValue);
+      } else {
+        paramString.append(val);
+      }
+    }
+
+    return paramString.toString();
+  }
+
+  public static String urlEncode(String value, String charset) throws UnsupportedEncodingException {
+    if (value == null) {
+      return null;
+    }
+    return URLEncoder.encode(value, charset)
+        .replace("+", "%20")
+        .replace("*", "%2A")
+        .replace("%7E", "~");
   }
 
   private String assembleRequestHeadersToQueryString(HttpServletRequest req) throws UnsupportedEncodingException {
@@ -129,47 +170,6 @@ public final class HttpContext extends Context<String, String[], String, String>
             (key1, key2) -> key2
         ));
     return parameterJoiner.join(parameters);
-  }
-
-  public static String assembleParamsToQueryString(Map<String, String> params, String charset) throws UnsupportedEncodingException {
-    if (params == null || params.isEmpty()) {
-      return null;
-    }
-
-    StringBuilder paramString = new StringBuilder();
-    boolean first = true;
-
-    for (Iterator<Entry<String, String>> iterator = params.entrySet().iterator(); iterator.hasNext(); first = false) {
-      Map.Entry<String, String> p = iterator.next();
-      String key = p.getKey();
-      String val = p.getValue();
-      if (!first) {
-        paramString.append("&");
-      }
-      paramString.append(key);
-      paramString.append("=");
-      if (val == null) {
-        continue;
-      }
-      if (charset != null && !charset.isEmpty()) {
-        String encodedValue = urlEncode(val, charset);
-        paramString.append(encodedValue);
-      } else {
-        paramString.append(val);
-      }
-    }
-
-    return paramString.toString();
-  }
-
-  public static String urlEncode(String value, String charset) throws UnsupportedEncodingException {
-    if (value == null) {
-      return null;
-    }
-    return URLEncoder.encode(value, charset)
-        .replace("+", "%20")
-        .replace("*", "%2A")
-        .replace("%7E", "~");
   }
 
 }

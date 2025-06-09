@@ -25,6 +25,7 @@ subprojects {
   afterEvaluate {
     dependencies {
       implementation(libs.slf4j.api)
+      implementation(libs.jakarta.annotation)
 
       compileOnly(libs.lombok)
       annotationProcessor(libs.lombok)

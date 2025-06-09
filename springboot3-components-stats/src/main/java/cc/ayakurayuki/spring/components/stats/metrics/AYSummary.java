@@ -12,6 +12,21 @@ import lombok.Getter;
 @Getter
 public class AYSummary extends AYSimpleCollector<ISummary, AYSummary> {
 
+  private final Long             maxAgeSeconds;
+  private final Integer          ageBuckets;
+  private final List<AYQuantile> quantiles;
+
+  public AYSummary(Builder b) {
+    super(b);
+    maxAgeSeconds = b.maxAgeSeconds;
+    ageBuckets = b.ageBuckets;
+    quantiles = b.quantiles;
+  }
+
+  public static Builder build() {
+    return new Builder();
+  }
+
   @Override
   public AYSummary register() {
     iVector = MetricLoader.metricFactory.summary(this);
@@ -24,31 +39,17 @@ public class AYSummary extends AYSimpleCollector<ISummary, AYSummary> {
     return "summary";
   }
 
-  private final Long             maxAgeSeconds;
-  private final Integer          ageBuckets;
-  private final List<AYQuantile> quantiles;
-
-  public AYSummary(Builder b) {
-    super(b);
-    maxAgeSeconds = b.maxAgeSeconds;
-    ageBuckets = b.ageBuckets;
-    quantiles = b.quantiles;
-  }
-
   public void observe(double duration, String... labelValues) {
     checkState();
     iVector.observe(duration, labelValues);
   }
 
-  public static Builder build() {
-    return new Builder();
-  }
-
   public static class Builder extends AYSimpleCollector.Builder<Builder, AYSummary> {
 
-    private       Long             maxAgeSeconds = null;
-    private       Integer          ageBuckets    = null;
-    private final List<AYQuantile> quantiles     = Lists.newArrayList();
+    private final List<AYQuantile> quantiles = Lists.newArrayList();
+
+    private Long    maxAgeSeconds = null;
+    private Integer ageBuckets    = null;
 
     public Builder quantile(double quantile, double error) {
       quantiles.add(new AYQuantile(quantile, error));

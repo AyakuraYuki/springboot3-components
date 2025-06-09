@@ -10,6 +10,14 @@ import lombok.Getter;
 @Getter
 public class AYCounter extends AYSimpleCollector<ICounter, AYCounter> {
 
+  public AYCounter(Builder b) {
+    super(b);
+  }
+
+  public static Builder build() {
+    return new Builder();
+  }
+
   @Override
   public AYCounter register() {
     iVector = MetricLoader.metricFactory.counter(this);
@@ -20,10 +28,6 @@ public class AYCounter extends AYSimpleCollector<ICounter, AYCounter> {
   @Override
   public String getVectorName() {
     return "counter";
-  }
-
-  public AYCounter(Builder b) {
-    super(b);
   }
 
   public void inc(String... labelValues) {
@@ -39,10 +43,6 @@ public class AYCounter extends AYSimpleCollector<ICounter, AYCounter> {
   public double get(String... labelValues) {
     checkState();
     return iVector.get(labelValues);
-  }
-
-  public static Builder build() {
-    return new Builder();
   }
 
   public static class Builder extends AYSimpleCollector.Builder<Builder, AYCounter> {

@@ -10,6 +10,14 @@ import lombok.Getter;
 @Getter
 public class AYGauge extends AYSimpleCollector<IGauge, AYGauge> {
 
+  public AYGauge(Builder b) {
+    super(b);
+  }
+
+  public static Builder build() {
+    return new Builder();
+  }
+
   @Override
   public AYGauge register() {
     iVector = MetricLoader.metricFactory.gauge(this);
@@ -20,10 +28,6 @@ public class AYGauge extends AYSimpleCollector<IGauge, AYGauge> {
   @Override
   public String getVectorName() {
     return "gauge";
-  }
-
-  public AYGauge(Builder b) {
-    super(b);
   }
 
   public void inc(String... labelValues) {
@@ -53,10 +57,6 @@ public class AYGauge extends AYSimpleCollector<IGauge, AYGauge> {
 
   public double get(String... labelValues) {
     return iVector.get(labelValues);
-  }
-
-  public static Builder build() {
-    return new Builder();
   }
 
   public static class Builder extends AYSimpleCollector.Builder<Builder, AYGauge> {

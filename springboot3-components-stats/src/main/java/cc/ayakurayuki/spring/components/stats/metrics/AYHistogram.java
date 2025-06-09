@@ -6,10 +6,20 @@ import lombok.Getter;
 
 /**
  * @author Ayakura Yuki
- * @date 2025/03/10-18:05
  */
 @Getter
 public class AYHistogram extends AYSimpleCollector<IHistogram, AYHistogram> {
+
+  private final double[] buckets;
+
+  public AYHistogram(Builder b) {
+    super(b);
+    buckets = b.buckets;
+  }
+
+  public static Builder build() {
+    return new Builder();
+  }
 
   @Override
   public AYHistogram register() {
@@ -23,13 +33,6 @@ public class AYHistogram extends AYSimpleCollector<IHistogram, AYHistogram> {
     return "histogram";
   }
 
-  private final double[] buckets;
-
-  public AYHistogram(Builder b) {
-    super(b);
-    buckets = b.buckets;
-  }
-
   public AYHistogram observe(double duration, String... labelValues) {
     checkState();
     iVector.observe(duration, labelValues);
@@ -39,10 +42,6 @@ public class AYHistogram extends AYSimpleCollector<IHistogram, AYHistogram> {
   public double[] get(String... labelValues) {
     checkState();
     return iVector.get(labelValues);
-  }
-
-  public static Builder build() {
-    return new Builder();
   }
 
   public static class Builder extends AYSimpleCollector.Builder<Builder, AYHistogram> {

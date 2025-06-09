@@ -1,7 +1,7 @@
 package cc.ayakurayuki.spring.components.context;
 
+import jakarta.annotation.Nonnull;
 import java.util.Map;
-import javax.annotation.Nonnull;
 
 /**
  * @author Yann

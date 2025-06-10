@@ -19,9 +19,6 @@ dependencies {
   implementation(libs.spring.boot.starter.web)
   implementation(libs.opentelemetry.api)
   implementation(libs.opentelemetry.context)
-
-  testImplementation platform('org.junit:junit-bom:5.10.0')
-  testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 test {

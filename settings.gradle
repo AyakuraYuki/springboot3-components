@@ -15,3 +15,6 @@ include 'springboot3-components-trace'
 include 'springboot3-components-utility'
 
 include 'springboot3-components-http:springboot3-components-http-server'
+include 'springboot3-components-rpc:springboot3-components-rpc-core'
+include 'springboot3-components-rpc:springboot3-components-rpc-client'
+include 'springboot3-components-rpc:springboot3-components-rpc-server'

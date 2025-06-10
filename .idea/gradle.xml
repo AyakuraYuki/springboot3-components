@@ -18,6 +18,9 @@
             <option value="$PROJECT_DIR$/springboot3-components-opentelemetry" />
             <option value="$PROJECT_DIR$/springboot3-components-queue" />
             <option value="$PROJECT_DIR$/springboot3-components-rpc" />
+            <option value="$PROJECT_DIR$/springboot3-components-rpc/springboot3-components-rpc-client" />
+            <option value="$PROJECT_DIR$/springboot3-components-rpc/springboot3-components-rpc-core" />
+            <option value="$PROJECT_DIR$/springboot3-components-rpc/springboot3-components-rpc-server" />
             <option value="$PROJECT_DIR$/springboot3-components-starter" />
             <option value="$PROJECT_DIR$/springboot3-components-stats" />
             <option value="$PROJECT_DIR$/springboot3-components-trace" />

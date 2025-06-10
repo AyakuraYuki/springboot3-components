@@ -1,7 +1,7 @@
 package cc.ayakurayuki.spring.components.utility.paging;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
@@ -248,43 +248,66 @@ public abstract class PageAssembler {
 
   // ----------------------------------------------------------------------------------------------------
 
-  private static final Gson CONTEXT_JSON = new GsonBuilder().disableHtmlEscaping().create();
+  private static final ObjectMapper CONTEXT_MAPPER = new ObjectMapper();
 
   public static String toContext(Number nextId) {
     PageContext context = new PageContext();
     context.setNextId(nextId);
-    return CONTEXT_JSON.toJson(context);
+    try {
+      return CONTEXT_MAPPER.writeValueAsString(context);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static String toContext(Integer nextId) {
     PageContext context = new PageContext();
     context.setNextId(nextId);
-    return CONTEXT_JSON.toJson(context);
+    try {
+      return CONTEXT_MAPPER.writeValueAsString(context);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static String toContext(Long nextId) {
     PageContext context = new PageContext();
     context.setNextId(nextId);
-    return CONTEXT_JSON.toJson(context);
+    try {
+      return CONTEXT_MAPPER.writeValueAsString(context);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static String toContext(Double nextId) {
     PageContext context = new PageContext();
     context.setNextId(nextId);
-    return CONTEXT_JSON.toJson(context);
+    try {
+      return CONTEXT_MAPPER.writeValueAsString(context);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static String toContext(String token) {
     PageContext context = new PageContext();
     context.setToken(token);
-    return CONTEXT_JSON.toJson(context);
+    try {
+      return CONTEXT_MAPPER.writeValueAsString(context);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static Number toNextId(String context) {
     Number nextId = 0;
     PageContext pc = null;
     if (StringUtils.isNotBlank(context)) {
-      pc = CONTEXT_JSON.fromJson(context, PageContext.class);
+      try {
+        pc = CONTEXT_MAPPER.readValue(context, PageContext.class);
+      } catch (JsonProcessingException ignored) {
+      }
     }
     if (pc != null && pc.getNextId() != null) {
       nextId = pc.getNextId();
@@ -308,7 +331,10 @@ public abstract class PageAssembler {
     String token = null; // default as null
     PageContext pc = null;
     if (StringUtils.isNotBlank(context)) {
-      pc = CONTEXT_JSON.fromJson(context, PageContext.class);
+      try {
+        pc = CONTEXT_MAPPER.readValue(context, PageContext.class);
+      } catch (JsonProcessingException ignored) {
+      }
     }
     if (pc != null && pc.getToken() != null) {
       token = pc.getToken();

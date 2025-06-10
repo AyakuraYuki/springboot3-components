@@ -1,6 +1,7 @@
 package cc.ayakurayuki.spring.components.utility.strings;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class OptimizedEmojiModifierSetTest {
 
   @Test
-  void testContains() {
+  void testContains() throws JsonProcessingException {
     OptimizedEmojiModifierSet bitset = new OptimizedEmojiModifierSet();
     bitset.add(UnicodeGraphemeAnalyzer.ModifierBlack);
     bitset.add(UnicodeGraphemeAnalyzer.ModifierColorFul);
@@ -22,14 +23,15 @@ class OptimizedEmojiModifierSetTest {
     assert bitset.contains(UnicodeGraphemeAnalyzer.ModifierColorFul);
     assert !bitset.contains(0x0);
 
+    ObjectMapper mapper = new ObjectMapper();
     String raw = """
         {
           "nextId": 10.102
         }""";
-    Req req = new Gson().fromJson(raw, Req.class);
+    Req req = mapper.readValue(raw, Req.class);
     System.out.println(req.nextId.doubleValue());
     System.out.println(req.nextId.longValue());
-    System.out.println(new Gson().toJson(req));
+    System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(req));
   }
 
   @Data

@@ -8,6 +8,7 @@ gson = "2.13.1"
 guava = "33.4.8-jre"
 jackson = "2.19.0"
 jakartaAnnotation = "2.1.1"
+kafka = "3.9.1"
 logback = "1.5.18"
 lombok = "1.18.38"
 opentelemetry = "1.49.0"
@@ -32,6 +33,7 @@ jackson-bom = { group = "com.fasterxml.jackson", name = "jackson-bom", version.r
 jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-annotations" }
 jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind" }
 jakarta-annotation = { group = "jakarta.annotation", name = "jakarta.annotation-api", version.ref = "jakartaAnnotation" }
+kafka-clients = { group = "org.apache.kafka", name = "kafka-clients", version.ref = "kafka" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 logback-core = { group = "ch.qos.logback", name = "logback-core", version.ref = "logback" }
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }

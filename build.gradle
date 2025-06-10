@@ -37,6 +37,10 @@ subprojects {
       testRuntimeOnly libs.junit.platform.launcher
     }
   }
+
+  // tasks.withType(JavaCompile) {
+  //   options.compilerArgs += ["-Xlint:deprecation"]
+  // }
 }
 
 repositories {

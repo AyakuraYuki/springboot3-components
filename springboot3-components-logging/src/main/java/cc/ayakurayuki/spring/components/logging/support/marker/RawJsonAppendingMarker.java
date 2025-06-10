@@ -1,7 +1,6 @@
 package cc.ayakurayuki.spring.components.logging.support.marker;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.JsonObject;
 import java.io.Serial;
 import java.util.Map;
 import java.util.Objects;
@@ -34,7 +33,6 @@ public class RawJsonAppendingMarker extends SingleFieldAppendingMarker {
   public void writeTo(Object generator) {
     switch (generator) {
       case Map m -> m.put(getFieldName(), rawJson);
-      case JsonObject json -> json.addProperty(getFieldName(), rawJson);
       case ObjectNode json -> json.put(getFieldName(), rawJson);
       case null, default -> {
       }

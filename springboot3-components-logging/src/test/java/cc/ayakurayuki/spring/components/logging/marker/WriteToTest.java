@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.JsonObject;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -161,16 +160,6 @@ class WriteToTest {
     assert generator.size() == 2;
     assert generator.containsKey("message");
     assert generator.containsKey(rawJsonField);
-  }
-
-  @Test
-  void testRawJsonWriteToGson() {
-    JsonObject generator = new JsonObject();
-    generator.addProperty("message", "hello, world");
-    generator.addProperty(rawJsonField, rawJson);
-    assert generator.size() == 2;
-    assert generator.has("message");
-    assert generator.has(rawJsonField);
   }
 
   @Test

@@ -11,22 +11,37 @@ jakartaAnnotation = "2.1.1"
 kafka = "3.9.1"
 logback = "1.5.18"
 lombok = "1.18.38"
+netty = "4.1.118.Final"
 opentelemetry = "1.49.0"
 prometheusClient = "0.16.0"
-protobuf = "4.30.0"
+protobuf = "4.31.1"
 singleflight = "1.2.0"
 slf4j = "2.0.17"
 
 junit = "5.10.0"
 
 [libraries]
+# spring
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "springboot" }
-jakarta-servlet-api = { group = "jakarta.servlet", name = "jakarta.servlet-api", version = "6.0.0" }
 
+# netty
+netty-bom = { group = "io.netty", name = "netty-bom", version.ref = "netty" }
+netty-transport-native-epoll = { group = "io.netty", name = "netty-transport-native-epoll" }
+
+# grpc
+grpc-protobuf = { group = "io.grpc", name = "grpc-protobuf", version.ref = "grpc" }
+grpc-stub = { group = "io.grpc", name = "grpc-stub", version.ref = "grpc" }
+grpc-netty = { group = "io.grpc", name = "grpc-netty", version.ref = "grpc" }
+grpc-api = { group = "io.grpc", name = "grpc-api", version.ref = "grpc" }
+grpc-services = { group = "io.grpc", name = "grpc-services", version.ref = "grpc" }
+protobuf-java = { group = "com.google.protobuf", name = "protobuf-java", version.ref = "protobuf" }
+protobuf-java-util = { group = "com.google.protobuf", name = "protobuf-java-util", version.ref = "protobuf" }
+
+# toolchain
+jakarta-servlet-api = { group = "jakarta.servlet", name = "jakarta.servlet-api", version = "6.0.0" }
 bcprov-jdk18on = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncyCastle" }
 bcpkix-jdk18on = { group = "org.bouncycastle", name = "bcpkix-jdk18on", version.ref = "bouncyCastle" }
 commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang3" }
-grpc-protobuf = { group = "io.grpc", name = "grpc-protobuf", version.ref = "grpc" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 jackson-bom = { group = "com.fasterxml.jackson", name = "jackson-bom", version.ref = "jackson" }
@@ -40,6 +55,7 @@ lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" 
 singleflight = { group = "cc.ayakurayuki.repo", name = "singleflight", version.ref = "singleflight" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 
+# observation
 opentelemetry-api = { group = "io.opentelemetry", name = "opentelemetry-api", version.ref = "opentelemetry" }
 opentelemetry-context = { group = "io.opentelemetry", name = "opentelemetry-context", version.ref = "opentelemetry" }
 opentelemetry-exporter-otlp = { group = "io.opentelemetry", name = "opentelemetry-exporter-otlp", version.ref = "opentelemetry" }
@@ -50,6 +66,7 @@ simpleclient-hotspot = { group = "io.prometheus", name = "simpleclient_hotspot",
 simpleclient-servlet = { group = "io.prometheus", name = "simpleclient_servlet", version.ref = "prometheusClient" }
 micrometer-registry-prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus", version = "1.15.0" }
 
+# tester
 junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }

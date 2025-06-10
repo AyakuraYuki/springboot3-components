@@ -1,11 +1,19 @@
 package cc.ayakurayuki.spring.components.errors.exception;
 
 import cc.ayakurayuki.spring.components.errors.ServerCode;
+import java.io.Serial;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * @author Ayakura Yuki
  */
+@Getter
+@EqualsAndHashCode(callSuper = false)
 public class ServerException extends RuntimeException {
+
+  @Serial
+  private static final long serialVersionUID = -3479963171843557272L;
 
   private final Integer code;
 

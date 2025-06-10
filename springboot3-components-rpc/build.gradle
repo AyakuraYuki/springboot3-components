@@ -2,6 +2,8 @@ plugins {
   id 'java'
 }
 
+description = "RPC components including core, server and client"
+
 repositories {
   mavenCentral()
 }

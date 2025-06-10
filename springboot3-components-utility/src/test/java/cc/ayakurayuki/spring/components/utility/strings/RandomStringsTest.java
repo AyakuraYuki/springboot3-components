@@ -22,31 +22,31 @@ class RandomStringsTest {
   @Test
   void test() {
     Pattern reLower = Pattern.compile("[a-z]*");
-    assert reLower.matcher(RandomStrings.random(10, RandomStrings.Lower)).matches();
-    assert !reLower.matcher(RandomStrings.random(10, RandomStrings.LowerDigit)).matches();
+    assert reLower.matcher(RandomStrings.random(100, RandomStrings.Lower)).matches();
+    assert !reLower.matcher(RandomStrings.random(100, RandomStrings.LowerDigit)).matches();
 
     Pattern reUpper = Pattern.compile("[A-Z]*");
-    assert reUpper.matcher(RandomStrings.random(10, RandomStrings.Upper)).matches();
-    assert !reUpper.matcher(RandomStrings.random(10, RandomStrings.LowerDigit)).matches();
+    assert reUpper.matcher(RandomStrings.random(100, RandomStrings.Upper)).matches();
+    assert !reUpper.matcher(RandomStrings.random(100, RandomStrings.LowerDigit)).matches();
 
     Pattern reDigit = Pattern.compile("[0-9]*");
-    assert reDigit.matcher(RandomStrings.random(10, RandomStrings.Digit)).matches();
-    assert !reDigit.matcher(RandomStrings.random(10, RandomStrings.Upper)).matches();
+    assert reDigit.matcher(RandomStrings.random(100, RandomStrings.Digit)).matches();
+    assert !reDigit.matcher(RandomStrings.random(100, RandomStrings.Upper)).matches();
 
     Pattern reLowerDigit = Pattern.compile("[a-z0-9]*");
-    assert reLowerDigit.matcher(RandomStrings.random(10, RandomStrings.LowerDigit)).matches();
-    assert !reLowerDigit.matcher(RandomStrings.random(10, RandomStrings.Upper)).matches();
+    assert reLowerDigit.matcher(RandomStrings.random(100, RandomStrings.LowerDigit)).matches();
+    assert !reLowerDigit.matcher(RandomStrings.random(100, RandomStrings.Upper)).matches();
 
     Pattern reUpperDigit = Pattern.compile("[A-Z0-9]*");
-    assert reUpperDigit.matcher(RandomStrings.random(10, RandomStrings.UpperDigit)).matches();
-    assert !reUpperDigit.matcher(RandomStrings.random(10, RandomStrings.Lower)).matches();
+    assert reUpperDigit.matcher(RandomStrings.random(100, RandomStrings.UpperDigit)).matches();
+    assert !reUpperDigit.matcher(RandomStrings.random(100, RandomStrings.Lower)).matches();
 
     Pattern reLowerUpper = Pattern.compile("[a-zA-Z]*");
-    assert reLowerUpper.matcher(RandomStrings.random(10, RandomStrings.LowerUpper)).matches();
-    assert !reLowerUpper.matcher(RandomStrings.random(10, RandomStrings.Digit)).matches();
+    assert reLowerUpper.matcher(RandomStrings.random(100, RandomStrings.LowerUpper)).matches();
+    assert !reLowerUpper.matcher(RandomStrings.random(100, RandomStrings.Digit)).matches();
 
     Pattern reLowerUpperDigit = Pattern.compile("[a-zA-Z0-9]*");
-    assert reLowerUpperDigit.matcher(RandomStrings.random(10, RandomStrings.LowerUpperDigit)).matches();
+    assert reLowerUpperDigit.matcher(RandomStrings.random(100, RandomStrings.LowerUpperDigit)).matches();
   }
 
   @Test

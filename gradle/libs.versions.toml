@@ -22,7 +22,9 @@ junit = "5.10.0"
 
 [libraries]
 # spring
-spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "springboot" }
+spring-bom = { group = "org.springframework.boot", name = "spring-boot-dependencies", version.ref = "springboot" }
+spring-boot-configuration-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
 
 # netty
 netty-bom = { group = "io.netty", name = "netty-bom", version.ref = "netty" }

@@ -1,1 +1,54 @@
-{}
+{
+  "properties": [
+    {
+      "name": "application.boot.enabled",
+      "defaultValue": "true",
+      "description": "Application Boot configuration, enabled as default, for preloading classes defined by BootstrapSource SPI."
+    },
+    {
+      "name": "application.opentelemetry.enabled",
+      "defaultValue": "true",
+      "description": "OpenTelemetry auto configuration for OpenTelemetry observation, enabled as default and depended by io.opentelemetry.api.OpenTelemetry."
+    },
+    {
+      "name": "application.opentelemetry.trace.enabled",
+      "defaultValue": "true",
+      "description": "OpenTelemetry tracer auto configuration, enabled as default and depended by io.opentelemetry.sdk.OpenTelemetrySdk."
+    }
+  ],
+  "hints": [
+    {
+      "name": "application.boot.enabled",
+      "values": [
+        {
+          "value": "true"
+        },
+        {
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "name": "application.opentelemetry.enabled",
+      "values": [
+        {
+          "value": "true"
+        },
+        {
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "name": "application.opentelemetry.trace.enabled",
+      "values": [
+        {
+          "value": "true"
+        },
+        {
+          "value": "false"
+        }
+      ]
+    }
+  ]
+}

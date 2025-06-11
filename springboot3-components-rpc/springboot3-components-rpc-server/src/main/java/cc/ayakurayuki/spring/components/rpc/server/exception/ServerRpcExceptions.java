@@ -10,9 +10,9 @@ import io.grpc.Status;
 import io.grpc.Status.Code;
 import io.grpc.StatusException;
 import io.grpc.StatusRuntimeException;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class ServerRpcExceptions {
 

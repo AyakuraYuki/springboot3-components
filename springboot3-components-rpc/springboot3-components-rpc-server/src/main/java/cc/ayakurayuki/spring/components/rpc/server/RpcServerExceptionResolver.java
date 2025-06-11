@@ -7,6 +7,6 @@ import jakarta.annotation.Nonnull;
 public interface RpcServerExceptionResolver {
 
   @SuppressWarnings("rawtypes")
-  <ReqT, RspT> boolean resolveException(@Nonnull ServerCall<ReqT, RspT> serverCall, @Nonnull Context context, Throwable e);
+  <ReqT, RespT> boolean resolveException(@Nonnull ServerCall<ReqT, RespT> serverCall, @Nonnull Context context, Throwable e);
 
 }

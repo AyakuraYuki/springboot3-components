@@ -10,7 +10,7 @@ public class DefaultRpcServerExceptionResolver implements RpcServerExceptionReso
 
   @SuppressWarnings("rawtypes")
   @Override
-  public <ReqT, RspT> boolean resolveException(@Nonnull ServerCall<ReqT, RspT> serverCall, @Nonnull Context context, Throwable e) {
+  public <ReqT, RespT> boolean resolveException(@Nonnull ServerCall<ReqT, RespT> serverCall, @Nonnull Context context, Throwable e) {
     if (serverCall instanceof RpcServerCall rpcServerCall && rpcServerCall.isClosed()) {
       return false;
     }

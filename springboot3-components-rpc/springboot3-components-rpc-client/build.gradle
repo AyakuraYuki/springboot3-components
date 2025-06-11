@@ -2,14 +2,27 @@ plugins {
   id 'java'
 }
 
-group = 'cc.ayakurayuki'
-version = '1.0-SNAPSHOT'
+description = "The RPC client component provides the ability to quickly and easily implement RPC client functions. Importing and using RPC interfaces is as easy as injecting `@Autowired`!"
 
 repositories {
   mavenCentral()
 }
 
 dependencies {
+  implementation project(":springboot3-components-rpc:springboot3-components-rpc-core")
+  implementation project(":springboot3-components-boot")
+  implementation project(":springboot3-components-context")
+  implementation project(":springboot3-components-env")
+  implementation project(":springboot3-components-errors")
+  implementation project(":springboot3-components-stats")
+  implementation project(":springboot3-components-trace")
+
+  implementation(libs.grpc.api)
+  implementation(libs.grpc.protobuf)
+  implementation(libs.grpc.services)
+  implementation(libs.grpc.netty)
+  implementation(libs.opentelemetry.api)
+  implementation(libs.opentelemetry.context)
 }
 
 test {

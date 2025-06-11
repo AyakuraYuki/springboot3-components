@@ -30,7 +30,7 @@ public class RpcServerInterceptor implements ServerInterceptor {
   }
 
   @Override
-  public <ReqT, RspT> Listener<ReqT> interceptCall(ServerCall<ReqT, RspT> serverCall, Metadata metadata, ServerCallHandler<ReqT, RspT> next) {
+  public <ReqT, RespT> Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall, Metadata metadata, ServerCallHandler<ReqT, RespT> next) {
     final RpcContext context = RpcContext.create(metadata, serverCall);
     io.opentelemetry.context.Context otelContext = CompositeOpenTelemetry.get()
         .getPropagators()
@@ -38,7 +38,7 @@ public class RpcServerInterceptor implements ServerInterceptor {
         .extract(io.opentelemetry.context.Context.current(), metadata, GrpcExtractAdapter.GETTER);
     otelContext = withRpcContext(context, otelContext);
 
-    final RpcServerCall<ReqT, RspT> rpcServerCall = new RpcServerCall<>(serverCall, context, otelContext, this.exceptionResolver);
+    final RpcServerCall<ReqT, RespT> rpcServerCall = new RpcServerCall<>(serverCall, context, otelContext, this.exceptionResolver);
     final Supplier<ServerCall.Listener<ReqT>> supplier = () -> {
       if (this.compressor != null) {
         rpcServerCall.setCompression(this.compressor);

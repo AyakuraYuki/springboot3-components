@@ -13,11 +13,11 @@ import io.grpc.ServerTransportFilter;
 import io.grpc.netty.NettyServerBuilder;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import jakarta.annotation.Nullable;
 import java.io.File;
 import java.io.InputStream;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -29,7 +29,7 @@ class RpcServerMetrics {
       .create()
       .register();
 
-  // rpc server code监控
+  // rpc server code
   public static final AYCounter RPC_SERVER_CODE = AYCounter.build()
       .namespace(NAMESPACE)
       .subsystem(SUBSYSTEM)

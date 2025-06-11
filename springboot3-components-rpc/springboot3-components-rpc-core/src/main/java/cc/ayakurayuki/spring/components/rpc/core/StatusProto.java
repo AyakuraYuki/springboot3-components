@@ -6,8 +6,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import io.grpc.Metadata;
 import io.grpc.Status;
 import io.grpc.protobuf.ProtoUtils;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class StatusProto {
 

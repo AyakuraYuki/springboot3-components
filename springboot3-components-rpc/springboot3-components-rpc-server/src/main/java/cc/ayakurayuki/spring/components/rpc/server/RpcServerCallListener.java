@@ -4,11 +4,11 @@ import io.grpc.ForwardingServerCallListener;
 import io.grpc.ServerCall;
 import jakarta.annotation.Nonnull;
 
-class RpcServerCallListener<ReqT, RspT> extends ForwardingServerCallListener.SimpleForwardingServerCallListener<ReqT> {
+class RpcServerCallListener<ReqT, RespT> extends ForwardingServerCallListener.SimpleForwardingServerCallListener<ReqT> {
 
-  private final RpcServerCall<ReqT, RspT> call;
+  private final RpcServerCall<ReqT, RespT> call;
 
-  protected RpcServerCallListener(ServerCall.Listener<ReqT> delegate, @Nonnull RpcServerCall<ReqT, RspT> call) {
+  protected RpcServerCallListener(ServerCall.Listener<ReqT> delegate, @Nonnull RpcServerCall<ReqT, RespT> call) {
     super(delegate);
     this.call = call;
   }

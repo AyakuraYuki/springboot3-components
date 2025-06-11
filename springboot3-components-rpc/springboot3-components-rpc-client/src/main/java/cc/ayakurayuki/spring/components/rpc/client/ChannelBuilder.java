@@ -133,6 +133,7 @@ public class ChannelBuilder extends io.grpc.ManagedChannelBuilder<ChannelBuilder
     return this;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public ChannelBuilder nameResolverFactory(NameResolver.Factory resolverFactory) {
     this.delegateBuilder.nameResolverFactory(resolverFactory);

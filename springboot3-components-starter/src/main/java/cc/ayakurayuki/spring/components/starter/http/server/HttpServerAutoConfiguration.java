@@ -3,11 +3,14 @@ package cc.ayakurayuki.spring.components.starter.http.server;
 import cc.ayakurayuki.spring.components.errors.ServerCode;
 import cc.ayakurayuki.spring.components.http.server.HttpServerIndicator;
 import cc.ayakurayuki.spring.components.http.server.interceptor.HttpContextInterceptor;
+import com.alibaba.fastjson2.JSONWriter.Feature;
+import com.alibaba.fastjson2.support.spring6.http.converter.FastJsonHttpMessageConverter;
 import io.opentelemetry.api.trace.StatusCode;
 import io.prometheus.client.hotspot.DefaultExports;
 import io.prometheus.client.servlet.jakarta.exporter.MetricsServlet;
 import io.undertow.Undertow;
 import jakarta.servlet.Servlet;
+import java.util.Collections;
 import org.apache.catalina.startup.Tomcat;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -17,6 +20,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.handler.MappedInterceptor;
@@ -156,6 +160,26 @@ public class HttpServerAutoConfiguration {
     @ConditionalOnMissingBean(HttpServerWebDataBinderAdvice.class)
     HttpServerWebDataBinderAdvice httpServerWebDataBinderAdvice() {
       return new HttpServerWebDataBinderAdvice();
+    }
+
+  }
+
+  /**
+   * FastJson2 HTTP message converter
+   */
+  @Configuration
+  @ConditionalOnClass(FastJsonHttpMessageConverter.class)
+  @ConditionalOnMissingBean(FastJsonHttpMessageConverter.class)
+  @ConditionalOnProperty(prefix = "application.http.server.fastjson", name = "enabled", havingValue = "true")
+  static class FastJsonHttpMessageConverterConfiguration {
+
+    @Bean
+    FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+      FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+      converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+      // non-string key serializes to string, for example, number 123 converts "123"
+      converter.getFastJsonConfig().setWriterFeatures(Feature.WriteNonStringKeyAsString);
+      return converter;
     }
 
   }

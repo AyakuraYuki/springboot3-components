@@ -33,6 +33,7 @@ dependencies {
 
   compileOnly(libs.spring.boot.starter.web)
   compileOnly(libs.undertow.core)
+  compileOnly(libs.fastjson2.extension.spring6)
 }
 
 tasks.named('compileJava') {

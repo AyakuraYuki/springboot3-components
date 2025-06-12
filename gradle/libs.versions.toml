@@ -3,6 +3,7 @@ springboot = "3.5.0"
 
 bouncyCastle = "1.80"
 commonsLang3 = "3.17.0"
+fastjson2 = "2.0.57"
 grpc = "1.73.0"
 gson = "2.13.1"
 guava = "33.4.8-jre"
@@ -57,6 +58,8 @@ logback-core = { group = "ch.qos.logback", name = "logback-core", version.ref = 
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 singleflight = { group = "cc.ayakurayuki.repo", name = "singleflight", version.ref = "singleflight" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+fastjson2 = { group = "com.alibaba.fastjson2", name = "fastjson2", version.ref = "fastjson2" }
+fastjson2-extension-spring6 = { group = "com.alibaba.fastjson2", name = "fastjson2-extension-spring6", version.ref = "fastjson2" }
 
 # observation
 opentelemetry-api = { group = "io.opentelemetry", name = "opentelemetry-api", version.ref = "opentelemetry" }

@@ -10,8 +10,12 @@ repositories {
 
 dependencies {
   implementation project(':springboot3-components-boot')
+  implementation project(':springboot3-components-context')
   implementation project(':springboot3-components-env')
+  implementation project(':springboot3-components-errors')
+  implementation project(':springboot3-components-logging')
   implementation project(':springboot3-components-opentelemetry')
+  implementation project(':springboot3-components-stats')
   implementation project(':springboot3-components-trace')
   implementation project(':springboot3-components-utility')
   implementation project(':springboot3-components-http:springboot3-components-http-server')
@@ -19,14 +23,16 @@ dependencies {
   implementation project(':springboot3-components-rpc:springboot3-components-rpc-client')
 
   implementation platform(libs.spring.bom)
-  implementation(libs.spring.boot.starter.web)
   implementation(libs.spring.boot.configuration.processor)
   implementation(libs.opentelemetry.api)
   implementation(libs.opentelemetry.sdk)
   implementation(libs.opentelemetry.extension.trace.propagators)
   implementation(libs.micrometer.registry.prometheus)
   implementation(libs.simpleclient.hotspot)
-  implementation(libs.simpleclient.servlet)
+  implementation(libs.simpleclient.servlet.jakarta)
+
+  compileOnly(libs.spring.boot.starter.web)
+  compileOnly(libs.undertow.core)
 }
 
 tasks.named('compileJava') {

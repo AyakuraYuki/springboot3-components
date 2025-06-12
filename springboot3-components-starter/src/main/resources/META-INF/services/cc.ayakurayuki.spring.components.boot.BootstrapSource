@@ -1,0 +1,4 @@
+cc.ayakurayuki.spring.components.http.server.HttpServerBootstrap
+cc.ayakurayuki.spring.components.logging.LoggingBootstrap
+cc.ayakurayuki.spring.components.trace.TraceBootstrap
+cc.ayakurayuki.spring.components.stats.StatsBootstrap

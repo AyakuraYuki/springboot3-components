@@ -13,7 +13,7 @@ logback = "1.5.18"
 lombok = "1.18.38"
 netty = "4.1.118.Final"
 opentelemetry = "1.49.0"
-prometheusClient = "0.16.0"
+prometheus = "0.16.0"
 protobuf = "4.31.1"
 singleflight = "1.2.0"
 slf4j = "2.0.17"
@@ -25,6 +25,7 @@ junit = "5.10.0"
 spring-bom = { group = "org.springframework.boot", name = "spring-boot-dependencies", version.ref = "springboot" }
 spring-boot-configuration-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+undertow-core = { group = "io.undertow", name = "undertow-core" }
 
 # netty
 netty-bom = { group = "io.netty", name = "netty-bom", version.ref = "netty" }
@@ -64,8 +65,8 @@ opentelemetry-exporter-otlp = { group = "io.opentelemetry", name = "opentelemetr
 opentelemetry-extension-trace-propagators = { group = "io.opentelemetry", name = "opentelemetry-extension-trace-propagators", version.ref = "opentelemetry" }
 opentelemetry-sdk = { group = "io.opentelemetry", name = "opentelemetry-sdk", version.ref = "opentelemetry" }
 opentelemetry-sdk-trace = { group = "io.opentelemetry", name = "opentelemetry-sdk-trace", version.ref = "opentelemetry" }
-simpleclient-hotspot = { group = "io.prometheus", name = "simpleclient_hotspot", version.ref = "prometheusClient" }
-simpleclient-servlet = { group = "io.prometheus", name = "simpleclient_servlet", version.ref = "prometheusClient" }
+simpleclient-hotspot = { group = "io.prometheus", name = "simpleclient_hotspot", version.ref = "prometheus" }
+simpleclient_servlet_jakarta = { group = "io.prometheus", name = "simpleclient_servlet_jakarta", version.ref = "prometheus" }
 micrometer-registry-prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus", version = "1.15.0" }
 
 # tester

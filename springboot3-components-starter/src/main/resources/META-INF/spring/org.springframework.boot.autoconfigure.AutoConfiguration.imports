@@ -1,0 +1,4 @@
+cc.ayakurayuki.spring.components.starter.boot.ApplicationBootConfiguration
+cc.ayakurayuki.spring.components.starter.http.server.HttpServerAutoConfiguration
+cc.ayakurayuki.spring.components.starter.inject.InjectConfiguration
+cc.ayakurayuki.spring.components.starter.trace.OpenTelemetryAutoConfiguration

@@ -11,7 +11,7 @@ dependencies {
   implementation project(":springboot3-components-utility")
 
   implementation(libs.simpleclient.hotspot)
-  implementation(libs.simpleclient.servlet)
+  implementation(libs.simpleclient.servlet.jakarta)
   implementation(libs.micrometer.registry.prometheus)
 }
 

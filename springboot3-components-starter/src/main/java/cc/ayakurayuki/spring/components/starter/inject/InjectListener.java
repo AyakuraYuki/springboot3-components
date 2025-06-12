@@ -14,6 +14,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.AnnotationUtils;
 
 /**
  * Injectable listener
@@ -37,33 +38,33 @@ public class InjectListener implements ApplicationListener<ApplicationStartedEve
   }
 
   private void inject(Object bean) {
-    for (Field declaredField : bean.getClass().getDeclaredFields()) {
-      Inject annotation = declaredField.getAnnotation(Inject.class);
+    for (Field field : bean.getClass().getDeclaredFields()) {
+      Inject annotation = AnnotationUtils.getAnnotation(field, Inject.class);
       if (annotation == null) {
         continue;
       }
 
-      if (!Modifier.isStatic(declaredField.getModifiers())) {
-        throw new RuntimeException("non-static field injection is not supported. class: [%s], field: [%s]".formatted(bean.getClass().getName(), declaredField.getName()));
+      if (!Modifier.isStatic(field.getModifiers())) {
+        throw new RuntimeException("non-static field injection is not supported. class: [%s], field: [%s]".formatted(bean.getClass().getName(), field.getName()));
       }
 
       String name = annotation.name();
-      declaredField.setAccessible(true);
+      field.setAccessible(true);
 
       try {
         Object injectBean;
-        if (declaredField.getType() == List.class) {
+        if (field.getType() == List.class) {
           throw new RuntimeException("collections are not supported for injection");
         } else if (name == null || name.isEmpty()) {
-          injectBean = this.beanFactory.getBean(declaredField.getType());
+          injectBean = this.beanFactory.getBean(field.getType());
         } else {
           injectBean = this.beanFactory.getBean(name);
         }
-        declaredField.set(bean, injectBean);
+        field.set(bean, injectBean);
       } catch (NoSuchBeanDefinitionException e) {
-        throw new BeanInitializationException("failed to inject bean to static field cause bean not found. class: %s, name: %s".formatted(declaredField.getType().getSimpleName(), name), e);
+        throw new BeanInitializationException("failed to inject bean to static field cause bean not found. class: %s, name: %s".formatted(field.getType().getSimpleName(), name), e);
       } catch (IllegalAccessException | IllegalAccessError e) {
-        throw new BeanInitializationException("failed to inject bean to static field cause bean not found. class: %s, name: %s".formatted(declaredField.getDeclaringClass().getSimpleName(), name), e);
+        throw new BeanInitializationException("failed to inject bean to static field cause bean not found. class: %s, name: %s".formatted(field.getDeclaringClass().getSimpleName(), name), e);
       }
     }
   }

@@ -3,6 +3,8 @@ package cc.ayakurayuki.spring.components.context.concurrent.pool;
 import cc.ayakurayuki.spring.components.stats.model.ThreadPool;
 import cc.ayakurayuki.spring.components.stats.stats.ScheduledStats;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import jakarta.annotation.Nonnull;
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.BlockingQueue;
@@ -73,6 +75,102 @@ public class ThreadPools {
    * customized ForkJoinPool
    */
   public static final ForkJoinPool common = newForkJoinPool("Fork-Join-Common-Pool", DEFAULT_PARALLELISM);
+
+  /**
+   * Directly create a new virtual thread executor by given name.
+   *
+   * @param name Thread prefix name
+   */
+  public static java.util.concurrent.Executor newVirtualExecutor(String name) {
+    ThreadFactory factory = Thread.ofVirtual().name(name).factory();
+    return Executors.newThreadPerTaskExecutor(factory);
+  }
+
+  /**
+   * Directly create a new virtual thread executor by given name.
+   *
+   * @param name  Thread prefix name
+   * @param start Start number of thread namings
+   */
+  public static java.util.concurrent.Executor newVirtualExecutor(String name, long start) {
+    ThreadFactory factory = Thread.ofVirtual().name(name, start).factory();
+    return Executors.newThreadPerTaskExecutor(factory);
+  }
+
+  /**
+   * Directly create a new virtual thread executor by given name.
+   *
+   * @param name    Thread prefix name
+   * @param inherit inherit {@link InheritableThreadLocal} from parent ({@code true}) or not ({@code false})
+   */
+  public static java.util.concurrent.Executor newVirtualExecutor(String name, boolean inherit) {
+    ThreadFactory factory = Thread.ofVirtual()
+        .name(name)
+        .inheritInheritableThreadLocals(inherit)
+        .factory();
+    return Executors.newThreadPerTaskExecutor(factory);
+  }
+
+  /**
+   * Directly create a new virtual thread executor by given name.
+   *
+   * @param name    Thread prefix name
+   * @param start   Start number of thread namings
+   * @param inherit inherit {@link InheritableThreadLocal} from parent ({@code true}) or not ({@code false})
+   */
+  public static java.util.concurrent.Executor newVirtualExecutor(String name, long start, boolean inherit) {
+    ThreadFactory factory = Thread.ofVirtual()
+        .name(name, start)
+        .inheritInheritableThreadLocals(inherit)
+        .factory();
+    return Executors.newThreadPerTaskExecutor(factory);
+  }
+
+  /**
+   * Directly create a new virtual thread executor by given name.
+   *
+   * @param name                     Thread prefix name
+   * @param uncaughtExceptionHandler customized exception handler
+   */
+  public static java.util.concurrent.Executor newVirtualExecutor(String name, @Nonnull UncaughtExceptionHandler uncaughtExceptionHandler) {
+    ThreadFactory factory = Thread.ofVirtual()
+        .name(name)
+        .uncaughtExceptionHandler(uncaughtExceptionHandler)
+        .factory();
+    return Executors.newThreadPerTaskExecutor(factory);
+  }
+
+  /**
+   * Directly create a new virtual thread executor by given name.
+   *
+   * @param name                     Thread prefix name
+   * @param start                    Start number of thread namings
+   * @param uncaughtExceptionHandler customized exception handler
+   */
+  public static java.util.concurrent.Executor newVirtualExecutor(String name, long start, @Nonnull UncaughtExceptionHandler uncaughtExceptionHandler) {
+    ThreadFactory factory = Thread.ofVirtual()
+        .name(name, start)
+        .uncaughtExceptionHandler(uncaughtExceptionHandler)
+        .factory();
+    return Executors.newThreadPerTaskExecutor(factory);
+  }
+
+  /**
+   * Directly create a new virtual thread executor by given name.
+   *
+   * @param name                     Thread prefix name
+   * @param start                    Start number of thread namings
+   * @param inherit                  inherit {@link InheritableThreadLocal} from parent ({@code true}) or not ({@code false})
+   * @param uncaughtExceptionHandler customized exception handler
+   */
+  public static java.util.concurrent.Executor newVirtualExecutor(String name, long start, boolean inherit, @Nonnull UncaughtExceptionHandler uncaughtExceptionHandler) {
+    ThreadFactory factory = Thread.ofVirtual()
+        .name(name, start)
+        .inheritInheritableThreadLocals(inherit)
+        .uncaughtExceptionHandler(uncaughtExceptionHandler)
+        .factory();
+    return Executors.newThreadPerTaskExecutor(factory);
+  }
 
   /**
    * Create a new scalable thread pool executor with 5 mins keepAliveTime

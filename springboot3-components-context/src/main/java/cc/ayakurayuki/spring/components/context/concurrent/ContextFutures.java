@@ -1,6 +1,7 @@
 package cc.ayakurayuki.spring.components.context.concurrent;
 
 import cc.ayakurayuki.spring.components.context.Context;
+import cc.ayakurayuki.spring.components.context.concurrent.pool.ThreadPools;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -8,16 +9,13 @@ import io.opentelemetry.context.Scope;
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class ContextFutures {
 
   private static final Executor FUTURE_CALLBACK;
 
   static {
-    FUTURE_CALLBACK = Executors.newThreadPerTaskExecutor(
-        Thread.ofVirtual().name("Future-Callback-").factory()
-    );
+    FUTURE_CALLBACK = ThreadPools.newVirtualExecutor("Future-Callback-");
   }
 
   /**

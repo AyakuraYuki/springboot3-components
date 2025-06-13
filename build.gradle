@@ -1,9 +1,13 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
   id 'java-library'
-  id 'org.jreleaser' version '1.17.0'
+  id "com.vanniktech.maven.publish" version "0.32.0"
 }
 
-description = "Spring Boot 3 Components"
+group = 'cc.ayakurayuki'
+version = '1.0.0-SNAPSHOT'
+description = 'Spring Boot 3 Components'
 
 defaultTasks 'build'
 
@@ -21,6 +25,7 @@ allprojects {
 
   tasks.withType(JavaCompile).configureEach {
     options.release = 21
+    options.encoding = 'UTF-8'
   }
 }
 
@@ -42,7 +47,6 @@ subprojects {
       testRuntimeOnly libs.junit.platform.launcher
     }
   }
-
 }
 
 repositories {
@@ -55,6 +59,47 @@ dependencies {
   testRuntimeOnly libs.junit.platform.launcher
 }
 
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
 test {
   useJUnitPlatform()
 }
+
+mavenPublishing {
+  publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+  signAllPublications()
+
+  coordinates(project.group, project.name, project.version)
+
+  pom {
+    name = project.name
+    description = project.description
+    inceptionYear = '2025'
+    url = 'https://github.com/AyakuraYuki/springboot3-components'
+    licenses {
+      license {
+        name = 'MIT License'
+        url = 'https://github.com/AyakuraYuki/springboot3-components/blob/main/LICENSE'
+      }
+    }
+    developers {
+      developer {
+        id = 'AyakuraYuki'
+        name = 'Ayakura Yuki'
+        url = 'https://github.com/AyakuraYuki'
+      }
+    }
+    scm {
+      url = 'https://github.com/AyakuraYuki/springboot3-components'
+      connection = 'scm:git:https://github.com/AyakuraYuki/springboot3-components.git'
+      developerConnection = 'scm:git:https://github.com/AyakuraYuki/springboot3-components.git'
+    }
+  }
+}
+
+tasks.register('showCoordinates', () -> {
+  println(project.group)
+  println(project.name)
+  println(project.version)
+})

@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 description = "This module provides a lightweight SPI-based mechanism for class preloading during application startup through configurable package scanning and exclusion."

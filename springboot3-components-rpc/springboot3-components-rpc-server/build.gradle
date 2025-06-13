@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 description = "The RPC server component provides the ability to quickly and easily implement RPC server functions. Declaring and implementing RPC interfaces is as easy as writing `@Service`!"

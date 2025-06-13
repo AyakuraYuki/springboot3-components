@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 description = "logging component, provides a appender to generate log message in fixed format"

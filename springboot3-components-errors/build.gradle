@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 description = "Server exception handling component with unified error encapsulation and predefined status codes."

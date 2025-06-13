@@ -1,5 +1,5 @@
 plugins {
-  id 'java'
+  id 'java-library'
 }
 
 description = "The RPC client component provides the ability to quickly and easily implement RPC client functions. Importing and using RPC interfaces is as easy as injecting `@Autowired`!"

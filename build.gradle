@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.JavaPlatform
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
@@ -63,11 +64,11 @@ subprojects {
 }
 
 mavenPublishing {
+  configure(new JavaPlatform())
   publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-
   signAllPublications()
 
-  coordinates(group, name, version)
+  coordinates(group as String, name as String, version as String)
 
   pom {
     name = project.name

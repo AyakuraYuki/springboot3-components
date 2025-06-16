@@ -70,7 +70,7 @@ mavenPublishing {
 
   signAllPublications()
 
-  coordinates(project.group, project.name, project.version)
+  coordinates(project.group as String, project.name as String, project.version as String)
 
   pom {
     name = project.name

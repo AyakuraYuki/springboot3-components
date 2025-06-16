@@ -76,3 +76,7 @@ micrometer-registry-prometheus = { group = "io.micrometer", name = "micrometer-r
 junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+
+[plugins]
+protobuf = { id = "com.google.protobuf", version = "0.9.5" }
+maven-publisher = { id = "com.vanniktech.maven.publish", version = "0.32.0" }

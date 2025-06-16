@@ -1,12 +1,4 @@
-plugins {
-  id 'java-library'
-}
-
 description = "The RPC server component provides the ability to quickly and easily implement RPC server functions. Declaring and implementing RPC interfaces is as easy as writing `@Service`!"
-
-repositories {
-  mavenCentral()
-}
 
 dependencies {
   implementation project(":springboot3-components-rpc:springboot3-components-rpc-core")
@@ -23,8 +15,4 @@ dependencies {
   implementation(libs.protobuf.java)
   implementation(libs.opentelemetry.api)
   implementation(libs.opentelemetry.context)
-}
-
-test {
-  useJUnitPlatform()
 }

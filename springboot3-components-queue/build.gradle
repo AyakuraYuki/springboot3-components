@@ -1,18 +1,6 @@
-plugins {
-  id 'java-library'
-}
-
-repositories {
-  mavenCentral()
-}
-
 dependencies {
   implementation project(":springboot3-components-http:springboot3-components-http-server")
   implementation project(":springboot3-components-utility")
 
   implementation(libs.kafka.clients)
-}
-
-test {
-  useJUnitPlatform()
 }

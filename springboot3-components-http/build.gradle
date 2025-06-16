@@ -1,16 +1,5 @@
-plugins {
-  id 'java-library'
-}
-
 description = "HTTP components"
 
-repositories {
-  mavenCentral()
-}
-
 dependencies {
-}
-
-test {
-  useJUnitPlatform()
+  api project(":springboot3-components-http:springboot3-components-http-server")
 }

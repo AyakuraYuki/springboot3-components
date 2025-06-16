@@ -1,76 +1,69 @@
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
-  id 'java-library'
-  id "com.vanniktech.maven.publish" version "0.32.0"
+  id 'java-platform'
+  alias(libs.plugins.maven.publisher)
 }
 
-group = 'cc.ayakurayuki.repo'
-version = '1.0.0-SNAPSHOT'
 description = 'Spring Boot 3 Components'
 
 defaultTasks 'build'
 
-allprojects {
-  group = 'cc.ayakurayuki.repo'
-  version = '1.0.0-SNAPSHOT'
+tasks.register('showCoordinates', () -> { println("coordinates: ${project.group}:${project.name}:${project.version}") })
+
+repositories {
+  mavenCentral()
+}
+
+subprojects {
+  apply plugin: 'java-library'
 
   java {
-    withJavadocJar()
-    withSourcesJar()
+    // withSourcesJar()
+    // withJavadocJar()
     toolchain {
       languageVersion = JavaLanguageVersion.of(21)
     }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    implementation platform(libs.netty.bom)
+    implementation platform(libs.spring.bom)
+    implementation platform(libs.jackson.bom)
+
+    implementation(libs.slf4j.api)
+    implementation(libs.jakarta.annotation)
+
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.platform.launcher
   }
 
   tasks.withType(JavaCompile).configureEach {
     options.release = 21
     options.encoding = 'UTF-8'
   }
-}
+  compileJava.options.encoding = 'UTF-8'
+  compileTestJava.options.encoding = 'UTF-8'
 
-subprojects {
-  afterEvaluate {
-    dependencies {
-      implementation platform(libs.netty.bom)
-
-      implementation(libs.slf4j.api)
-      implementation(libs.jakarta.annotation)
-
-      compileOnly(libs.lombok)
-      annotationProcessor(libs.lombok)
-      testCompileOnly(libs.lombok)
-      testAnnotationProcessor(libs.lombok)
-
-      testImplementation platform(libs.junit.bom)
-      testImplementation libs.junit.jupiter
-      testRuntimeOnly libs.junit.platform.launcher
-    }
+  test {
+    useJUnitPlatform()
   }
-}
-
-repositories {
-  mavenCentral()
-}
-
-dependencies {
-  testImplementation platform(libs.junit.bom)
-  testImplementation libs.junit.jupiter
-  testRuntimeOnly libs.junit.platform.launcher
-}
-
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-test {
-  useJUnitPlatform()
 }
 
 mavenPublishing {
   publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
 
   signAllPublications()
-
-  coordinates(project.group as String, project.name as String, project.version as String)
 
   pom {
     name = project.name
@@ -97,9 +90,3 @@ mavenPublishing {
     }
   }
 }
-
-tasks.register('showCoordinates', () -> {
-  println(project.group)
-  println(project.name)
-  println(project.version)
-})

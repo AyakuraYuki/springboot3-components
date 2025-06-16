@@ -1,12 +1,4 @@
-plugins {
-  id 'java-library'
-}
-
 description = "Core starter, including auto-configuration support, http server, rpc server and rpc client"
-
-repositories {
-  mavenCentral()
-}
 
 dependencies {
   implementation project(':springboot3-components-boot')
@@ -22,7 +14,6 @@ dependencies {
   implementation project(':springboot3-components-rpc:springboot3-components-rpc-server') // include as `implementation` for mistake-proofing
   implementation project(':springboot3-components-rpc:springboot3-components-rpc-client') // include as `implementation` for mistake-proofing
 
-  implementation platform(libs.spring.bom)
   implementation(libs.spring.boot.configuration.processor)
 
   compileOnly(libs.opentelemetry.api)
@@ -43,8 +34,4 @@ dependencies {
 
 tasks.named('compileJava') {
   inputs.files(tasks.named('processResources'))
-}
-
-test {
-  useJUnitPlatform()
 }

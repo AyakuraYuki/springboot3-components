@@ -1,11 +1,3 @@
-plugins {
-  id 'java-library'
-}
-
-repositories {
-  mavenCentral()
-}
-
 dependencies {
   implementation project(":springboot3-components-boot")
   implementation project(":springboot3-components-utility")
@@ -13,8 +5,5 @@ dependencies {
   implementation(libs.simpleclient.hotspot)
   implementation(libs.simpleclient.servlet.jakarta)
   implementation(libs.micrometer.registry.prometheus)
-}
-
-test {
-  useJUnitPlatform()
+  implementation(libs.guava)
 }

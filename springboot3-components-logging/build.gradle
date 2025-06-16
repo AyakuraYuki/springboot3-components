@@ -1,22 +1,9 @@
-plugins {
-  id 'java-library'
-}
-
 description = "logging component, provides a appender to generate log message in fixed format"
-
-repositories {
-  mavenCentral()
-}
 
 dependencies {
   implementation project(":springboot3-components-boot")
 
-  implementation platform(libs.jackson.bom)
   implementation(libs.jackson.databind)
   implementation(libs.logback.core)
   implementation(libs.logback.classic)
-}
-
-test {
-  useJUnitPlatform()
 }

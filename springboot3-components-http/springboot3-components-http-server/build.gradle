@@ -1,12 +1,4 @@
-plugins {
-  id 'java-library'
-}
-
 description = "HTTP Server components"
-
-repositories {
-  mavenCentral()
-}
 
 dependencies {
   implementation project(":springboot3-components-boot")
@@ -16,12 +8,8 @@ dependencies {
   implementation project(":springboot3-components-trace")
   implementation project(":springboot3-components-utility")
 
-  implementation platform(libs.spring.bom)
   implementation(libs.spring.boot.starter.web)
   implementation(libs.opentelemetry.api)
   implementation(libs.opentelemetry.context)
-}
-
-test {
-  useJUnitPlatform()
+  implementation(libs.guava)
 }

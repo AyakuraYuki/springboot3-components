@@ -1,16 +1,7 @@
-plugins {
-  id 'java-library'
-}
-
 description = "RPC components including core, server and client"
 
-repositories {
-  mavenCentral()
-}
-
 dependencies {
-}
-
-test {
-  useJUnitPlatform()
+  api project(":springboot3-components-rpc:springboot3-components-rpc-core")
+  api project(":springboot3-components-rpc:springboot3-components-rpc-client")
+  api project(":springboot3-components-rpc:springboot3-components-rpc-server")
 }

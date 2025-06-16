@@ -1,13 +1,8 @@
 plugins {
-  id 'java-library'
-  id 'com.google.protobuf' version '0.9.5'
+  alias(libs.plugins.protobuf)
 }
 
 description = "RPC core component, presenting error convertor and response packaging supports"
-
-repositories {
-  mavenCentral()
-}
 
 dependencies {
   implementation project(":springboot3-components-errors")
@@ -18,8 +13,4 @@ dependencies {
   implementation(libs.grpc.netty)
   implementation(libs.protobuf.java.util)
   implementation(libs.netty.transport.native.epoll)
-}
-
-test {
-  useJUnitPlatform()
 }

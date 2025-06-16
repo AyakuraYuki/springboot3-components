@@ -67,6 +67,8 @@ mavenPublishing {
 
   signAllPublications()
 
+  coordinates(group, name, version)
+
   pom {
     name = project.name
     description = project.description

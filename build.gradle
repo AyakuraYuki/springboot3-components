@@ -9,10 +9,12 @@ description = 'Spring Boot 3 Components'
 
 defaultTasks 'build'
 
-tasks.register('showCoordinates', () -> { println("coordinates: ${project.group}:${project.name}:${project.version}") })
-
 repositories {
   mavenCentral()
+}
+
+allprojects {
+  tasks.register('showArtifact', () -> { println("artifact: ${project.group}:${project.name}:${project.version}") })
 }
 
 subprojects {

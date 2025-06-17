@@ -1,3 +1,5 @@
+apply from: rootProject.file('base.gradle')
+
 description = "logging component, provides a appender to generate log message in fixed format"
 
 dependencies {

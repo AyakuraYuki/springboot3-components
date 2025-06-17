@@ -1,3 +1,5 @@
+apply from: rootProject.file('base.gradle')
+
 description = "HTTP components"
 
 dependencies {

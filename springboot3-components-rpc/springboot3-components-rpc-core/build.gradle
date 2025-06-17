@@ -2,6 +2,8 @@ plugins {
   alias(libs.plugins.protobuf)
 }
 
+apply from: rootProject.file('base.gradle')
+
 description = "RPC core component, presenting error convertor and response packaging supports"
 
 dependencies {

@@ -2,6 +2,8 @@ plugins {
   alias(libs.plugins.protobuf)
 }
 
+apply from: rootProject.file('base.gradle')
+
 dependencies {
   implementation project(":springboot3-components-stats")
   implementation project(":springboot3-components-utility")

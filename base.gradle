@@ -1,0 +1,63 @@
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+defaultTasks 'build'
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+group = 'cc.ayakurayuki.repo'
+version = '1.0.1-SNAPSHOT'
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
+  withSourcesJar()
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+dependencies {
+  def ignoredModules = ['springboot3-components-boot', 'springboot3-components-http', 'springboot3-components-rpc']
+  if (!ignoredModules.contains(project.name)) {
+    implementation platform(libs.netty.bom)
+    implementation platform(libs.spring.bom)
+    implementation platform(libs.jackson.bom)
+
+    implementation(libs.slf4j.api)
+    implementation(libs.jakarta.annotation)
+
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.platform.launcher
+  }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  options.release = 21
+  options.encoding = 'UTF-8'
+}
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+tasks.register('showArtifact', () -> println("artifact: ${project.group}:${project.name}:${project.version}"))
+
+test {
+  useJUnitPlatform()
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      from(components.java)
+    }
+  }
+}

@@ -1,8 +1,7 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
   id 'java-platform'
-  alias(libs.plugins.maven.publisher)
+  alias(libs.plugins.moe.karla.maven.publishing)
+  id 'maven-publish'
 }
 
 description = 'Spring Boot 3 Components'
@@ -21,8 +20,6 @@ subprojects {
   apply plugin: 'java-library'
 
   java {
-    // withSourcesJar()
-    // withJavadocJar()
     toolchain {
       languageVersion = JavaLanguageVersion.of(21)
     }
@@ -63,34 +60,15 @@ subprojects {
 }
 
 mavenPublishing {
-  configureBasedOnAppliedPlugins(true, true)
-  publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-  signAllPublications()
+  publishingType = moe.karla.maven.publishing.MavenPublishingExtension.PublishingType.USER_MANAGED
+  url = 'https://github.com/AyakuraYuki/springboot3-components'
+  developer('Ayakura Yuki', 'AyakuraYuki@users.noreply.github.com')
+}
 
-  coordinates(group as String, name as String, version as String)
-
-  pom {
-    name = project.name
-    description = project.description
-    inceptionYear = '2025'
-    url = 'https://github.com/AyakuraYuki/springboot3-components'
-    licenses {
-      license {
-        name = 'MIT License'
-        url = 'https://github.com/AyakuraYuki/springboot3-components/blob/main/LICENSE'
-      }
-    }
-    developers {
-      developer {
-        id = 'AyakuraYuki'
-        name = 'Ayakura Yuki'
-        url = 'https://github.com/AyakuraYuki'
-      }
-    }
-    scm {
-      url = 'https://github.com/AyakuraYuki/springboot3-components'
-      connection = 'scm:git:https://github.com/AyakuraYuki/springboot3-components.git'
-      developerConnection = 'scm:git:https://github.com/AyakuraYuki/springboot3-components.git'
+publishing {
+  publications {
+    main(MavenPublication) {
+      from(project.components.java)
     }
   }
 }

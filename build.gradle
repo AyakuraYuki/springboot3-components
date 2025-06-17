@@ -2,7 +2,7 @@ import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
   id 'java-platform'
-  alias(libs.plugins.maven.publisher)
+  alias(libs.plugins.vanniktech.maven.publish)
 }
 
 description = 'Spring Boot 3 Components'
@@ -21,8 +21,6 @@ subprojects {
   apply plugin: 'java-library'
 
   java {
-    // withSourcesJar()
-    // withJavadocJar()
     toolchain {
       languageVersion = JavaLanguageVersion.of(21)
     }
@@ -64,7 +62,9 @@ subprojects {
 
 mavenPublishing {
   configureBasedOnAppliedPlugins(true, true)
+
   publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
   signAllPublications()
 
   coordinates(group as String, name as String, version as String)

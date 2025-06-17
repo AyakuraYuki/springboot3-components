@@ -79,4 +79,4 @@ junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform
 
 [plugins]
 protobuf = { id = "com.google.protobuf", version = "0.9.5" }
-maven-publisher = { id = "com.vanniktech.maven.publish", version = "0.32.0" }
+vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.32.0" }

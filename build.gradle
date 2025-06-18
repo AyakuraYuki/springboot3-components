@@ -8,10 +8,6 @@ plugins {
 
 description = 'Spring Boot 3 Components'
 
-javaPlatform {
-  allowDependencies()
-}
-
 allprojects {
   group = rootProject.group
   version = rootProject.version

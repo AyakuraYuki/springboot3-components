@@ -8,7 +8,6 @@ plugins {
 
 apply from: rootProject.file('scripts/java-library.gradle')
 apply from: rootProject.file('scripts/build-toolchain-dependencies.gradle')
-apply from: rootProject.file('scripts/test-platform.gradle')
 
 description = "logging component, provides a appender to generate log message in fixed format"
 

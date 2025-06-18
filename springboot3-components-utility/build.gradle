@@ -8,7 +8,6 @@ plugins {
 
 apply from: rootProject.file('scripts/java-library.gradle')
 apply from: rootProject.file('scripts/build-toolchain-dependencies.gradle')
-apply from: rootProject.file('scripts/test-platform.gradle')
 
 description = "Tools, toolbox, utils, whatever you call, this is the module that provides static methods, enums, e.g."
 

@@ -58,9 +58,6 @@ public abstract class ObjectUtils {
    *
    * @see Optional#isPresent()
    * @see ObjectUtils#isEmpty(Object[])
-   * @see org.springframework.util.StringUtils#hasLength(CharSequence)
-   * @see org.springframework.util.CollectionUtils#isEmpty(Collection)
-   * @see org.springframework.util.CollectionUtils#isEmpty(Map)
    */
   public static boolean isEmpty(Object obj) {
     if (obj == null) {
@@ -71,7 +68,7 @@ public abstract class ObjectUtils {
       return ((Optional<?>) obj).isEmpty();
     }
     if (obj instanceof CharSequence) {
-      return ((CharSequence) obj).length() == 0;
+      return ((CharSequence) obj).isEmpty();
     }
     if (obj.getClass().isArray()) {
       return Array.getLength(obj) == 0;

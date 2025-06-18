@@ -1,8 +1,14 @@
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+
 plugins {
+  id 'java-library'
   alias(libs.plugins.protobuf)
+  alias(libs.plugins.vanniktech.maven.publish)
 }
 
-apply from: rootProject.file('base.gradle')
+apply from: rootProject.file('scripts/java-library.gradle')
+apply from: rootProject.file('scripts/build-toolchain-dependencies.gradle')
 
 description = "RPC core component, presenting error convertor and response packaging supports"
 
@@ -10,9 +16,13 @@ dependencies {
   implementation project(":springboot3-components-errors")
   implementation project(":springboot3-components-stats")
 
+  implementation platform(libs.netty.bom)
+  implementation(libs.grpc.netty)
   implementation(libs.grpc.protobuf)
   implementation(libs.grpc.stub)
-  implementation(libs.grpc.netty)
-  implementation(libs.protobuf.java.util)
   implementation(libs.netty.transport.native.epoll)
+  implementation(libs.protobuf.java.util)
 }
+
+configureMavenPublishingCommonFields(project)
+mavenPublishing.configure(new JavaLibrary(new JavadocJar.None(), true))

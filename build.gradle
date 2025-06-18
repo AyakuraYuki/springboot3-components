@@ -1,1 +1,71 @@
+import com.vanniktech.maven.publish.JavaPlatform
+import com.vanniktech.maven.publish.SonatypeHost
+
+plugins {
+  id 'java-platform'
+  alias(libs.plugins.vanniktech.maven.publish)
+}
+
 description = 'Spring Boot 3 Components'
+
+javaPlatform {
+  allowDependencies()
+}
+
+allprojects {
+  group = rootProject.group
+  version = rootProject.version
+
+  defaultTasks 'build'
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+
+  tasks.register('showArtifact', () -> println("artifact: ${project.group}:${project.name}:${project.version}"))
+}
+
+def configurePom = { project ->
+  mavenPublishing.pom {
+    name = project.name
+    description = project.description
+    inceptionYear = '2025'
+    url = 'https://github.com/AyakuraYuki/springboot3-components'
+    licenses {
+      license {
+        name = 'MIT License'
+        url = 'https://github.com/AyakuraYuki/springboot3-components/blob/main/LICENSE'
+      }
+    }
+    developers {
+      developer {
+        id = 'AyakuraYuki'
+        name = 'Ayakura Yuki'
+        url = 'https://github.com/AyakuraYuki'
+      }
+    }
+    scm {
+      url = 'https://github.com/AyakuraYuki/springboot3-components'
+      connection = 'scm:git:https://github.com/AyakuraYuki/springboot3-components.git'
+      developerConnection = 'scm:git:https://github.com/AyakuraYuki/springboot3-components.git'
+    }
+  }
+}
+
+subprojects {
+  ext.configureMavenPublishingCommonFields = { project ->
+    mavenPublishing.publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    mavenPublishing.signAllPublications()
+    mavenPublishing.coordinates(project.group as String, project.name as String, project.version as String)
+    configurePom(project)
+  }
+}
+
+mavenPublishing {
+  configure(new JavaPlatform())
+  publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+  signAllPublications()
+  coordinates(project.group as String, project.name as String, project.version as String)
+}
+configurePom(project)

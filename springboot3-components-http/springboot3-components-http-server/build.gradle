@@ -1,4 +1,13 @@
-apply from: rootProject.file('base.gradle')
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+
+plugins {
+  id 'java-library'
+  alias(libs.plugins.vanniktech.maven.publish)
+}
+
+apply from: rootProject.file('scripts/java-library.gradle')
+apply from: rootProject.file('scripts/build-toolchain-dependencies.gradle')
 
 description = "HTTP Server components"
 
@@ -10,8 +19,12 @@ dependencies {
   implementation project(":springboot3-components-trace")
   implementation project(":springboot3-components-utility")
 
-  implementation(libs.spring.boot.starter.web)
+  implementation(libs.guava)
   implementation(libs.opentelemetry.api)
   implementation(libs.opentelemetry.context)
-  implementation(libs.guava)
+  implementation platform(libs.spring.bom)
+  implementation(libs.spring.boot.starter.web)
 }
+
+configureMavenPublishingCommonFields(project)
+mavenPublishing.configure(new JavaLibrary(new JavadocJar.None(), true))

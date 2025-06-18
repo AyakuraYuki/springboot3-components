@@ -1,9 +1,21 @@
-apply from: rootProject.file('base.gradle')
+import com.vanniktech.maven.publish.JavaPlatform
+
+plugins {
+  id 'java-platform'
+  alias(libs.plugins.vanniktech.maven.publish)
+}
 
 description = "RPC components including core, server and client"
+
+javaPlatform {
+  allowDependencies()
+}
 
 dependencies {
   api project(":springboot3-components-rpc:springboot3-components-rpc-core")
   api project(":springboot3-components-rpc:springboot3-components-rpc-client")
   api project(":springboot3-components-rpc:springboot3-components-rpc-server")
 }
+
+configureMavenPublishingCommonFields(project)
+mavenPublishing.configure(new JavaPlatform())

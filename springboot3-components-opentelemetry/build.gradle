@@ -1,10 +1,21 @@
-apply from: rootProject.file('base.gradle')
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+
+plugins {
+  id 'java-library'
+  alias(libs.plugins.vanniktech.maven.publish)
+}
+
+apply from: rootProject.file('scripts/java-library.gradle')
 
 dependencies {
   implementation(libs.opentelemetry.api)
   implementation(libs.opentelemetry.context)
-  implementation(libs.opentelemetry.sdk)
-  implementation(libs.opentelemetry.sdk.trace)
   implementation(libs.opentelemetry.exporter.otlp)
   implementation(libs.opentelemetry.extension.trace.propagators)
+  implementation(libs.opentelemetry.sdk)
+  implementation(libs.opentelemetry.sdk.trace)
 }
+
+configureMavenPublishingCommonFields(project)
+mavenPublishing.configure(new JavaLibrary(new JavadocJar.None(), true))

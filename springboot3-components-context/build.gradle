@@ -1,16 +1,25 @@
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+
 plugins {
+  id 'java-library'
   alias(libs.plugins.protobuf)
+  alias(libs.plugins.vanniktech.maven.publish)
 }
 
-apply from: rootProject.file('base.gradle')
+apply from: rootProject.file('scripts/java-library.gradle')
+apply from: rootProject.file('scripts/build-toolchain-dependencies.gradle')
 
 dependencies {
   implementation project(":springboot3-components-stats")
   implementation project(":springboot3-components-utility")
 
-  implementation(libs.grpc.protobuf)
-  implementation(libs.jakarta.servlet.api)
-  implementation(libs.opentelemetry.context)
   implementation(libs.commons.lang3)
+  implementation(libs.jakarta.servlet.api)
+  implementation(libs.grpc.protobuf)
   implementation(libs.guava)
+  implementation(libs.opentelemetry.context)
 }
+
+configureMavenPublishingCommonFields(project)
+mavenPublishing.configure(new JavaLibrary(new JavadocJar.None(), true))

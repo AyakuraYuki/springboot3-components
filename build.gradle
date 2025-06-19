@@ -19,7 +19,17 @@ allprojects {
     mavenCentral()
   }
 
-  tasks.register('showArtifact', () -> println("artifact: ${project.group}:${project.name}:${project.version}"))
+  tasks.register('showArtifact', { println("artifact: ${project.group}:${project.name}:${project.version}") })
+
+  tasks.register('copyLicense', {
+    outputs.file new File("${layout.buildDirectory}/LICENSE")
+    doLast {
+      copy {
+        from(rootProject.files('LICENSE'))
+        into layout.buildDirectory
+      }
+    }
+  })
 }
 
 def configurePom = { project ->

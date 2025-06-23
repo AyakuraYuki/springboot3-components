@@ -12,6 +12,8 @@ import io.undertow.Undertow;
 import jakarta.servlet.Servlet;
 import java.util.Collections;
 import org.apache.catalina.startup.Tomcat;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -20,6 +22,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +34,7 @@ import org.springframework.web.servlet.handler.MappedInterceptor;
     TomcatHttpServerProperties.class,
     UndertowHttpServerProperties.class
 })
+@EnableAspectJAutoProxy
 public class HttpServerAutoConfiguration {
 
   /**
@@ -108,6 +112,18 @@ public class HttpServerAutoConfiguration {
       registration.setAsyncSupported(true);
       registration.setOrder(2);
       return registration;
+    }
+
+  }
+
+  @Configuration
+  @ConditionalOnClass({Aspect.class, ProceedingJoinPoint.class})
+  static class RateLimitAspectConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean(name = "rateLimitAspect")
+    RateLimitAspect rateLimitAspect() {
+      return new RateLimitAspect();
     }
 
   }

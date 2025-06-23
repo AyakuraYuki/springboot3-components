@@ -1,6 +1,7 @@
 [versions]
 springboot = "3.5.0"
 
+aspectj = "1.9.24"
 bouncyCastle = "1.80"
 commonsLang3 = "3.17.0"
 fastjson2 = "2.0.57"
@@ -27,6 +28,9 @@ spring-bom = { group = "org.springframework.boot", name = "spring-boot-dependenc
 spring-boot-configuration-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
 undertow-core = { group = "io.undertow", name = "undertow-core" }
+aspectjrt = { group = "org.aspectj", name = "aspectjrt", version.ref = "aspectj" }
+aspectjtools = { group = "org.aspectj", name = "aspectjtools", version.ref = "aspectj" }
+aspectjweaver = { group = "org.aspectj", name = "aspectjweaver", version.ref = "aspectj" }
 
 # netty
 netty-bom = { group = "io.netty", name = "netty-bom", version.ref = "netty" }

@@ -29,6 +29,7 @@ dependencies {
   implementation platform(libs.netty.bom)
 
   implementation(libs.spring.boot.configuration.processor)
+  implementation(libs.aspectjrt)
 
   compileOnly(libs.grpc.api)
   compileOnly(libs.grpc.stub)

@@ -31,6 +31,8 @@ dependencies {
   implementation(libs.spring.boot.configuration.processor)
   implementation(libs.aspectjrt)
 
+  implementation(libs.orika.core)
+
   compileOnly(libs.grpc.api)
   compileOnly(libs.grpc.stub)
   compileOnly(libs.grpc.services)

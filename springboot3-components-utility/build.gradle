@@ -23,6 +23,8 @@ dependencies {
   implementation(libs.jackson.annotations)
   implementation(libs.jackson.databind)
   implementation(libs.singleflight)
+  implementation(libs.jodconverter.core)
+  implementation(libs.jodconverter.local)
 }
 
 configureMavenPublishingCommonFields(project)

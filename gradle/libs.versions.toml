@@ -20,6 +20,7 @@ prometheus = "0.16.0"
 protobuf = "4.31.1"
 singleflight = "1.2.0"
 slf4j = "2.0.17"
+jodconverter = "4.4.11"
 
 junit = "5.10.0"
 
@@ -66,6 +67,8 @@ slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 fastjson2 = { group = "com.alibaba.fastjson2", name = "fastjson2", version.ref = "fastjson2" }
 fastjson2-extension-spring6 = { group = "com.alibaba.fastjson2", name = "fastjson2-extension-spring6", version.ref = "fastjson2" }
 orika-core = { group = "ma.glasnost.orika", name = "orika-core", version.ref = "orika" }
+jodconverter-core = { group = "org.jodconverter", name = "jodconverter-core", version.ref = "jodconverter" }
+jodconverter-local = { group = "org.jodconverter", name = "jodconverter-local", version.ref = "jodconverter" }
 
 # observation
 opentelemetry-api = { group = "io.opentelemetry", name = "opentelemetry-api", version.ref = "opentelemetry" }
